@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TravelerApp</string>
+
+    <!-- Dashboard strings -->
+    <string name="guest_name">Guest</string>
+    <string name="welcome_default">Welcome</string>
 </resources>

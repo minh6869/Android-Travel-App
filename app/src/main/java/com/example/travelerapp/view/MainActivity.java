@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnCreateAccount;
     private Button btnLogin;
+    private Button btnExplore; // Add a new button for direct dashboard access
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeComponents() {
         btnCreateAccount = findViewById(R.id.btnCreateAccount);
         btnLogin = findViewById(R.id.btnLogin);
+
     }
 
     private void setupClickListeners() {
@@ -48,13 +50,12 @@ public class MainActivity extends AppCompatActivity {
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create intent to navigate to SignupActivity
                 Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
 
-        // You can also add a click listener for the Login button if needed
+        // Set click listener for Login button
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

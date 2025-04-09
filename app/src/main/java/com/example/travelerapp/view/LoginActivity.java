@@ -192,11 +192,11 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công",
                                     Toast.LENGTH_SHORT).show();
 
-//                            // Chuyển đến màn hình chính
-//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class); // chỗ này đổi mainactiviy thành dashboard nhé
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            startActivity(intent);
-//                            finish(); // Đóng activity đăng nhập
+                            // Chuyển đến màn hình Dashboard
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish(); // Đóng activity đăng nhập
                         } else {
                             // Xử lý các loại lỗi đăng nhập khác nhau
                             handleLoginError(task.getException());
@@ -268,9 +268,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Kiểm tra nếu người dùng đã đăng nhập (không null)
         if (mAuth.getCurrentUser() != null) {
-            // Người dùng đã đăng nhập, chuyển đến MainActivity
-//            startActivity(new Intent(LoginActivity.this, Dashboard.class));
-//            finish();
+            // Người dùng đã đăng nhập, chuyển đến DashboardActivity
+            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+            finish();
         }
     }
 }
