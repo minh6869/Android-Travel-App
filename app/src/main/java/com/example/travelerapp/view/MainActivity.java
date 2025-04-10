@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(MainActivity.this, DashboardActivityTest.class);
                 startActivity(intent);
             }
         });

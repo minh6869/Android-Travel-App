@@ -46,5 +46,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 
 }

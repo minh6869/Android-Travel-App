@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/house"
-        android:title="Home" />
+        android:title="Home"
+        app:cnb_iconColor="@color/blue" />
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/contract"
-        android:title="Bookings" />
+        android:title="Bookings"
+        app:cnb_iconColor="@color/blue" />
     <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/heart"
-        android:title="Saves" />
+        android:title="Saves"
+        app:cnb_iconColor="@color/blue"/>
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/avatar"
-        android:title="Profile" />
+        android:title="Profile"
+        app:cnb_iconColor="@color/blue"/>
 </menu>
