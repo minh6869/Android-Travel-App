@@ -42,10 +42,12 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.navigation.fragment)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 
 }

@@ -24,6 +24,10 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -177,10 +181,8 @@ public class SignupActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(SignupActivity.this,
-                                                        "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-
-
+                                                // Now save user data to Firestore
+                                                saveUserToFirestore(user.getUid(), email, fullName);
                                             } else {
                                                 Toast.makeText(SignupActivity.this,
                                                         "Không thể cập nhật thông tin người dùng",
@@ -194,6 +196,37 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void saveUserToFirestore(String userId, String email, String name) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Create a new user document
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("email", email);
+        userData.put("name", name);
+        userData.put("phone", ""); // Empty default phone number
+        userData.put("avatarUrl", ""); // Empty default avatar URL
+        userData.put("paymentMethods", new ArrayList<String>()); // Empty payment methods array
+        userData.put("bookings", new ArrayList<String>()); // Empty bookings array
+
+        // Save to Firestore
+        db.collection("users").document(userId)
+            .set(userData)
+            .addOnSuccessListener(aVoid -> {
+                Toast.makeText(SignupActivity.this,
+                        "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+
+                // Navigate to login activity
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            })
+            .addOnFailureListener(e -> {
+                Toast.makeText(SignupActivity.this,
+                        "Lỗi khi lưu thông tin người dùng: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            });
     }
 
     private void setInputFieldsEnabled(boolean enabled) {

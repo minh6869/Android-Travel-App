@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                             // Chuyển đến màn hình Dashboard
-                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivityTest.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish(); // Đóng activity đăng nhập
@@ -269,7 +269,7 @@ public class LoginActivity extends AppCompatActivity {
         // Kiểm tra nếu người dùng đã đăng nhập (không null)
         if (mAuth.getCurrentUser() != null) {
             // Người dùng đã đăng nhập, chuyển đến DashboardActivity
-            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+            startActivity(new Intent(LoginActivity.this, DashboardActivityTest.class));
             finish();
         }
     }
