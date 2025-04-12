@@ -59,7 +59,8 @@
                     android:textAllCaps="false"
                     android:fontFamily="@font/sora"
                     android:textColor="#FFFFFF"
-                    android:background="@drawable/button_background" />
+                    app:cornerRadius="4dp"
+                    android:backgroundTint="#1E40AF" />
             </RelativeLayout>
 
             <!-- Profile Avatar Section -->
