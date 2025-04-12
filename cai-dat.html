@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài đặt - Hệ thống Quản lý Tour Du lịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-plane"></i>
+            <h1>Hệ thống Quản lý Tour Du lịch</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="admin-profile">
+                <img src="admin-avatar.png" alt="Admin avatar" class="admin-avatar" id="admin-avatar">
+                <h3 id="admin-name">Admin</h3>
+                <p id="admin-role">Quản trị viên</p>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="quan-ly-tour.html"><i class="fas fa-map-marked-alt"></i> Quản lý Tour</a></li>
+                    <li><a href="khach-hang.html"><i class="fas fa-users"></i> Khách hàng</a></li>
+                    <li><a href="thong-ke.html"><i class="fas fa-chart-bar"></i> Thống kê</a></li>
+                    <li class="active"><a href="cai-dat.html"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-header">
+                <h2>Cài đặt hệ thống</h2>
+            </div>
+            
+            <div class="settings-container">
+                <div class="settings-sidebar">
+                    <ul class="settings-nav">
+                        <li class="active"><a href="#profile-settings"><i class="fas fa-user-cog"></i> Thông tin tài khoản</a></li>
+                        <li><a href="#system-settings"><i class="fas fa-sliders-h"></i> Cài đặt hệ thống</a></li>
+                        <li><a href="#notification-settings"><i class="fas fa-bell"></i> Thông báo</a></li>
+                        <li><a href="#security-settings"><i class="fas fa-shield-alt"></i> Bảo mật</a></li>
+                        <li><a href="#backup-settings"><i class="fas fa-database"></i> Sao lưu & Phục hồi</a></li>
+                        <li><a href="#user-management"><i class="fas fa-users-cog"></i> Quản lý người dùng</a></li>
+                    </ul>
+                </div>
+                
+                <div class="settings-content">
+                    <div id="profile-settings" class="settings-section active">
+                        <h3>Thông tin tài khoản</h3>
+                        
+                        <div class="profile-info">
+                            <div class="profile-avatar">
+                                <img src="admin-avatar.png" alt="Admin avatar" id="profile-avatar-img">
+                                <button class="btn-change-avatar" id="change-avatar-btn"><i class="fas fa-camera"></i> Thay đổi ảnh</button>
+                                <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                            </div>
+                            
+                            <div class="profile-details">
+                                <form class="settings-form" id="profile-form">
+                                    <div class="form-group">
+                                        <label for="fullname">Họ và tên</label>
+                                        <input type="text" id="fullname" value="Admin">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" value="admin@tourmanagement.com" readonly>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại</label>
+                                        <input type="tel" id="phone" value="0901234567">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="position">Chức vụ</label>
+                                        <input type="text" id="position" value="Quản trị viên" readonly>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="change-password">
+                            <h4>Đổi mật khẩu</h4>
+                            <form class="settings-form" id="password-form">
+                                <div class="form-group">
+                                    <label for="current-password">Mật khẩu hiện tại</label>
+                                    <input type="password" id="current-password">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="new-password">Mật khẩu mới</label>
+                                    <input type="password" id="new-password">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="confirm-password">Xác nhận mật khẩu mới</label>
+                                    <input type="password" id="confirm-password">
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">Đổi mật khẩu</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div id="system-settings" class="settings-section">
+                        <h3>Cài đặt hệ thống</h3>
+                        
+                        <form class="settings-form" id="system-form">
+                            <div class="form-group">
+                                <label for="site-name">Tên hệ thống</label>
+                                <input type="text" id="site-name" value="Hệ thống Quản lý Tour Du lịch">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="site-logo">Logo</label>
+                                <div class="logo-upload">
+                                    <img src="logo.png" alt="Logo hiện tại" id="logo-preview">
+                                    <input type="file" id="site-logo" accept="image/*">
+                                    <button type="button" class="btn-upload" id="logo-upload-btn">Chọn file</button>
+                                    <span id="logo-filename">Chưa có file nào được chọn</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="language">Ngôn ngữ mặc định</label>
+                                <select id="language">
+                                    <option value="vi" selected>Tiếng Việt</option>
+                                    <option value="en">Tiếng Anh</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="timezone">Múi giờ</label>
+                                <select id="timezone">
+                                    <option value="Asia/Ho_Chi_Minh" selected>Asia/Ho_Chi_Minh (GMT+7)</option>
+                                    <option value="Asia/Bangkok">Asia/Bangkok (GMT+7)</option>
+                                    <option value="Asia/Singapore">Asia/Singapore (GMT+8)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="date-format">Định dạng ngày tháng</label>
+                                <select id="date-format">
+                                    <option value="dd/mm/yyyy" selected>DD/MM/YYYY</option>
+                                    <option value="mm/dd/yyyy">MM/DD/YYYY</option>
+                                    <option value="yyyy-mm-dd">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="currency">Đơn vị tiền tệ</label>
+                                <select id="currency">
+                                    <option value="VND" selected>VND (₫)</option>
+                                    <option value="USD">USD ($)</option>
+                                    <option value="EUR">EUR (€)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                                <button type="reset" class="btn-secondary">Khôi phục mặc định</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div id="notification-settings" class="settings-section">
+                        <h3>Cài đặt thông báo</h3>
+                        
+                        <form class="settings-form" id="notification-form">
+                            <div class="form-group checkbox-group">
+                                <h4>Thông báo hệ thống</h4>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-new-booking" checked>
+                                    <label for="notify-new-booking">Thông báo khi có đặt tour mới</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-payment" checked>
+                                    <label for="notify-payment">Thông báo khi có thanh toán mới</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-cancellation" checked>
+                                    <label for="notify-cancellation">Thông báo khi có hủy tour</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-review" checked>
+                                    <label for="notify-review">Thông báo khi có đánh giá mới</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group checkbox-group">
+                                <h4>Phương thức nhận thông báo</h4>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-web" checked>
+                                    <label for="notify-web">Thông báo trên web</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-email" checked>
+                                    <label for="notify-email">Email</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notify-sms">
+                                    <label for="notify-sms">SMS</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div id="security-settings" class="settings-section">
+                        <h3>Cài đặt bảo mật</h3>
+                        
+                        <form class="settings-form" id="security-form">
+                            <div class="form-group checkbox-group">
+                                <h4>Đăng nhập</h4>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="two-factor-auth">
+                                    <label for="two-factor-auth">Bật xác thực hai yếu tố</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="session-timeout" checked>
+                                    <label for="session-timeout">Tự động đăng xuất sau thời gian không hoạt động</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="timeout-duration">Thời gian không hoạt động (phút)</label>
+                                <input type="number" id="timeout-duration" value="30" min="5" max="120">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password-policy">Chính sách mật khẩu</label>
+                                <select id="password-policy">
+                                    <option value="standard" selected>Tiêu chuẩn (ít nhất 8 ký tự)</option>
+                                    <option value="strong">Mạnh (ít nhất 10 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt)</option>
+                                    <option value="custom">Tùy chỉnh</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password-expiry">Thời hạn mật khẩu (ngày)</label>
+                                <input type="number" id="password-expiry" value="90" min="0" max="365">
+                                <small>Đặt 0 để không giới hạn thời hạn</small>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Lưu thay đổi</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div id="backup-settings" class="settings-section">
+                        <h3>Sao lưu & Phục hồi</h3>
+                        
+                        <div class="backup-actions">
+                            <div class="action-card">
+                                <h4>Sao lưu dữ liệu</h4>
+                                <p>Tạo bản sao lưu dữ liệu hệ thống</p>
+                                <button class="btn-primary" id="create-backup-btn"><i class="fas fa-download"></i> Tạo bản sao lưu mới</button>
+                            </div>
+                            
+                            <div class="action-card">
+                                <h4>Phục hồi dữ liệu</h4>
+                                <p>Phục hồi dữ liệu từ bản sao lưu</p>
+                                <div class="file-upload">
+                                    <input type="file" id="restore-file" accept=".json">
+                                    <button type="button" class="btn-secondary" id="restore-file-btn"><i class="fas fa-upload"></i> Chọn file</button>
+                                    <span id="restore-filename">Chưa có file nào được chọn</span>
+                                </div>
+                                <button class="btn-primary" id="restore-btn" disabled><i class="fas fa-undo"></i> Phục hồi</button>
+                            </div>
+                        </div>
+                        
+                        <div class="backup-history">
+                            <h4>Lịch sử sao lưu</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tên file</th>
+                                        <th>Kích thước</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="backup-history">
+                                    <!-- Dữ liệu sẽ được load từ Firebase -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="user-management" class="settings-section">
+                        <h3>Quản lý người dùng</h3>
+                        
+                        <div class="user-actions">
+                            <button class="btn-primary" id="add-user-btn"><i class="fas fa-user-plus"></i> Thêm người dùng mới</button>
+                        </div>
+                        
+                        <div class="user-list">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Họ và tên</th>
+                                        <th>Email</th>
+                                        <th>Vai trò</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table">
+                                    <!-- Dữ liệu sẽ được load từ Firebase -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal thêm/sửa người dùng -->
+            <div class="modal" id="user-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="user-modal-title">Thêm người dùng mới</h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form id="user-form">
+                            <input type="hidden" id="user-id">
+                            <div class="form-group">
+                                <label for="user-fullname">Họ và tên</label>
+                                <input type="text" id="user-fullname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-email">Email</label>
+                                <input type="email" id="user-email" required>
+                            </div>
+                            <div class="form-group" id="password-group">
+                                <label for="user-password">Mật khẩu</label>
+                                <input type="password" id="user-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-role">Vai trò</label>
+                                <select id="user-role" required>
+                                    <option value="admin">Quản trị viên</option>
+                                    <option value="staff">Nhân viên</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-status">Trạng thái</label>
+                                <select id="user-status" required>
+                                    <option value="active">Hoạt động</option>
+                                    <option value="inactive">Tạm khóa</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Lưu</button>
+                                <button type="button" class="btn-secondary" id="user-cancel-btn">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Firebase -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { auth, db, storage } from './firebase-config.js';
+        import { 
+            onAuthStateChanged, 
+            updatePassword, 
+            EmailAuthProvider, 
+            reauthenticateWithCredential,
+            createUserWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            doc, 
+            getDoc, 
+            updateDoc, 
+            collection, 
+            getDocs,
+            addDoc,
+            setDoc,
+            deleteDoc,
+            query,
+            where
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { 
+            ref, 
+            uploadBytes, 
+            getDownloadURL,
+            listAll,
+            deleteObject
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        // Biến toàn cục
+        let currentUser = null;
+        let userSettings = {};
+        let usersList = [];
+        let backupsList = [];
+        let selectedAvatarFile = null;
+        let selectedLogoFile = null;
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Đã đăng nhập:", user.email);
+                currentUser = user;
+                // Tải thông tin người dùng
+                loadUserProfile(user.uid);
+                // Tải cài đặt hệ thống
+                loadSystemSettings();
+                // Tải danh sách người dùng
+                loadUsers();
+                // Tải danh sách backup
+                loadBackups();
+            } else {
+                // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Tải thông tin người dùng
+        async function loadUserProfile(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    
+                    // Cập nhật thông tin sidebar
+                    document.getElementById('admin-name').textContent = userData.fullName || 'Admin';
+                    document.getElementById('admin-role').textContent = userData.role === 'admin' ? 'Quản trị viên' : 'Nhân viên';
+                    
+                    if (userData.photoURL) {
+                        document.getElementById('admin-avatar').src = userData.photoURL;
+                        document.getElementById('profile-avatar-img').src = userData.photoURL;
+                    }
+                    
+                    // Cập nhật form thông tin cá nhân
+                    document.getElementById('fullname').value = userData.fullName || '';
+                    document.getElementById('email').value = currentUser.email || '';
+                    document.getElementById('phone').value = userData.phone || '';
+                    document.getElementById('position').value = userData.role === 'admin' ? 'Quản trị viên' : 'Nhân viên';
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải thông tin người dùng:", error);
+            }
+        }
+
+        // Tải cài đặt hệ thống
+        async function loadSystemSettings() {
+            try {
+                const settingsDoc = await getDoc(doc(db, "settings", "system"));
+                if (settingsDoc.exists()) {
+                    userSettings = settingsDoc.data();
+                    
+                    // Cập nhật form cài đặt hệ thống
+                    document.getElementById('site-name').value = userSettings.siteName || 'Hệ thống Quản lý Tour Du lịch';
+                    document.getElementById('language').value = userSettings.language || 'vi';
+                    document.getElementById('timezone').value = userSettings.timezone || 'Asia/Ho_Chi_Minh';
+                    document.getElementById('date-format').value = userSettings.dateFormat || 'dd/mm/yyyy';
+                    document.getElementById('currency').value = userSettings.currency || 'VND';
+                    
+                    // Cập nhật logo
+                    if (userSettings.logoURL) {
+                        document.getElementById('logo-preview').src = userSettings.logoURL;
+                    }
+                    
+                    // Cập nhật cài đặt thông báo
+                    document.getElementById('notify-new-booking').checked = userSettings.notifications?.newBooking !== false;
+                    document.getElementById('notify-payment').checked = userSettings.notifications?.payment !== false;
+                    document.getElementById('notify-cancellation').checked = userSettings.notifications?.cancellation !== false;
+                    document.getElementById('notify-review').checked = userSettings.notifications?.review !== false;
+                    
+                    document.getElementById('notify-web').checked = userSettings.notificationMethods?.web !== false;
+                    document.getElementById('notify-email').checked = userSettings.notificationMethods?.email !== false;
+                    document.getElementById('notify-sms').checked = userSettings.notificationMethods?.sms === true;
+                    
+                    // Cập nhật cài đặt bảo mật
+                    document.getElementById('two-factor-auth').checked = userSettings.security?.twoFactorAuth === true;
+                    document.getElementById('session-timeout').checked = userSettings.security?.sessionTimeout !== false;
+                    document.getElementById('timeout-duration').value = userSettings.security?.timeoutDuration || 30;
+                    document.getElementById('password-policy').value = userSettings.security?.passwordPolicy || 'standard';
+                    document.getElementById('password-expiry').value = userSettings.security?.passwordExpiry || 90;
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải cài đặt hệ thống:", error);
+            }
+        }
+
+        // Tải danh sách người dùng
+        async function loadUsers() {
+            try {
+                const usersSnapshot = await getDocs(collection(db, "users"));
+                usersList = [];
+                
+                usersSnapshot.forEach(doc => {
+                    usersList.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                renderUsersTable();
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách người dùng:", error);
+            }
+        }
+
+        // Hiển thị danh sách người dùng
+        function renderUsersTable() {
+            const tableBody = document.getElementById('users-table');
+            
+            if (usersList.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Không có dữ liệu người dùng</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            usersList.forEach((user, index) => {
+                const statusClass = user.status === 'active' ? 'active' : 'inactive';
+                const statusText = user.status === 'active' ? 'Hoạt động' : 'Tạm khóa';
+                const roleText = user.role === 'admin' ? 'Quản trị viên' : 'Nhân viên';
+                
+                // Kiểm tra xem có phải người dùng hiện tại không
+                const isCurrentUser = user.id === currentUser.uid;
+                const deleteButton = isCurrentUser ? 
+                    '<button class="btn-delete" disabled><i class="fas fa-trash"></i></button>' : 
+                    `<button class="btn-delete" onclick="deleteUser('${user.id}')"><i class="fas fa-trash"></i></button>`;
+                
+                html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${user.fullName || 'N/A'}</td>
+                    <td>${user.email || 'N/A'}</td>
+                    <td>${roleText}</td>
+                    <td><span class="status ${statusClass}">${statusText}</span></td>
+                    <td class="actions">
+                        <button class="btn-edit" onclick="editUser('${user.id}')"><i class="fas fa-edit"></i></button>
+                        ${deleteButton}
+                    </td>
+                </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Tải danh sách backup
+        async function loadBackups() {
+            try {
+                // Liệt kê tất cả các file trong thư mục backups
+                const backupsRef = ref(storage, 'backups');
+                const backupsResult = await listAll(backupsRef);
+                
+                backupsList = [];
+                
+                // Lấy metadata cho mỗi file
+                for (const itemRef of backupsResult.items) {
+                    const metadata = await getMetadata(itemRef);
+                    const downloadURL = await getDownloadURL(itemRef);
+                    
+                    backupsList.push({
+                        name: itemRef.name,
+                        size: formatFileSize(metadata.size),
+                        timeCreated: new Date(metadata.timeCreated),
+                        downloadURL: downloadURL
+                    });
+                }
+                
+                // Sắp xếp theo thời gian tạo mới nhất
+                backupsList.sort((a, b) => b.timeCreated - a.timeCreated);
+                
+                renderBackupHistory();
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách backup:", error);
+                // Nếu không có backups, hiển thị bảng trống
+                renderBackupHistory();
+            }
+        }
+        async function getMetadata(itemRef) {
+            // Trong thực tế, bạn sẽ sử dụng itemRef.getMetadata()
+            // Nhưng ở đây tạo dữ liệu mẫu để hiển thị giao diện
+            return {
+                size: Math.floor(Math.random() * 30 * 1024 * 1024), // 0-30MB
+                timeCreated: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString() // 0-30 ngày trước
+            };
+        }
+
+        // Hiển thị lịch sử backup
+        function renderBackupHistory() {
+            const tableBody = document.getElementById('backup-history');
+            
+            if (backupsList.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Không có bản sao lưu nào</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            backupsList.forEach((backup) => {
+                const formattedDate = backup.timeCreated.toLocaleDateString('vi-VN') + ' ' + 
+                                     backup.timeCreated.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
+                
+                html += `
+                <tr>
+                    <td>${backup.name}</td>
+                    <td>${backup.size}</td>
+                    <td>${formattedDate}</td>
+                    <td class="actions">
+                        <button class="btn-download" onclick="downloadBackup('${backup.downloadURL}')"><i class="fas fa-download"></i></button>
+                        <button class="btn-restore" onclick="prepareRestore('${backup.name}', '${backup.downloadURL}')"><i class="fas fa-undo"></i></button>
+                        <button class="btn-delete" onclick="deleteBackup('${backup.name}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Định dạng kích thước file
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        // Xử lý sự kiện khi DOM đã tải xong
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý sự kiện thay đổi avatar
+            const changeAvatarBtn = document.getElementById('change-avatar-btn');
+            const avatarUpload = document.getElementById('avatar-upload');
+            
+            changeAvatarBtn.addEventListener('click', function() {
+                avatarUpload.click();
+            });
+            
+            avatarUpload.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    selectedAvatarFile = this.files[0];
+                    
+                    // Hiển thị preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profile-avatar-img').src = e.target.result;
+                    };
+                    reader.readAsDataURL(selectedAvatarFile);
+                    
+                    // Upload ngay khi chọn file
+                    uploadAvatar();
+                }
+            });
+            
+            // Xử lý sự kiện thay đổi logo
+            const logoUploadBtn = document.getElementById('logo-upload-btn');
+            const siteLogo = document.getElementById('site-logo');
+            
+            logoUploadBtn.addEventListener('click', function() {
+                siteLogo.click();
+            });
+            
+            siteLogo.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    selectedLogoFile = this.files[0];
+                    document.getElementById('logo-filename').textContent = selectedLogoFile.name;
+                    
+                    // Hiển thị preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('logo-preview').src = e.target.result;
+                    };
+                    reader.readAsDataURL(selectedLogoFile);
+                }
+            });
+            
+            // Xử lý sự kiện submit form thông tin cá nhân
+            document.getElementById('profile-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const fullName = document.getElementById('fullname').value;
+                    const phone = document.getElementById('phone').value;
+                    
+                    await updateDoc(doc(db, "users", currentUser.uid), {
+                        fullName: fullName,
+                        phone: phone,
+                        updatedAt: new Date()
+                    });
+                    
+                    alert('Cập nhật thông tin cá nhân thành công!');
+                    
+                    // Cập nhật hiển thị trên sidebar
+                    document.getElementById('admin-name').textContent = fullName;
+                } catch (error) {
+                    console.error("Lỗi khi cập nhật thông tin cá nhân:", error);
+                    alert('Đã xảy ra lỗi khi cập nhật thông tin cá nhân!');
+                }
+            });
+            
+            // Xử lý sự kiện đổi mật khẩu
+            document.getElementById('password-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('current-password').value;
+                const newPassword = document.getElementById('new-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                
+                if (newPassword !== confirmPassword) {
+                    alert('Mật khẩu xác nhận không khớp!');
+                    return;
+                }
+                
+                try {
+                    // Xác thực lại người dùng
+                    const credential = EmailAuthProvider.credential(
+                        currentUser.email,
+                        currentPassword
+                    );
+                    
+                    await reauthenticateWithCredential(currentUser, credential);
+                    
+                    // Đổi mật khẩu
+                    await updatePassword(currentUser, newPassword);
+                    
+                    alert('Đổi mật khẩu thành công!');
+                    
+                    // Reset form
+                    this.reset();
+                } catch (error) {
+                    console.error("Lỗi khi đổi mật khẩu:", error);
+                    
+                    if (error.code === 'auth/wrong-password') {
+                        alert('Mật khẩu hiện tại không chính xác!');
+                    } else {
+                        alert('Đã xảy ra lỗi khi đổi mật khẩu!');
+                    }
+                }
+            });
+            
+            // Xử lý sự kiện submit form cài đặt hệ thống
+            document.getElementById('system-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    // Upload logo nếu có
+                    if (selectedLogoFile) {
+                        const storageRef = ref(storage, `system/logo_${Date.now()}`);
+                        await uploadBytes(storageRef, selectedLogoFile);
+                        const logoURL = await getDownloadURL(storageRef);
+                        userSettings.logoURL = logoURL;
+                    }
+                    
+                    // Cập nhật cài đặt
+                    userSettings.siteName = document.getElementById('site-name').value;
+                    userSettings.language = document.getElementById('language').value;
+                    userSettings.timezone = document.getElementById('timezone').value;
+                    userSettings.dateFormat = document.getElementById('date-format').value;
+                    userSettings.currency = document.getElementById('currency').value;
+                    
+                    await setDoc(doc(db, "settings", "system"), userSettings);
+                    
+                    alert('Cập nhật cài đặt hệ thống thành công!');
+                    
+                    // Reset file đã chọn
+                    selectedLogoFile = null;
+                    document.getElementById('logo-filename').textContent = 'Chưa có file nào được chọn';
+                } catch (error) {
+                    console.error("Lỗi khi cập nhật cài đặt hệ thống:", error);
+                    alert('Đã xảy ra lỗi khi cập nhật cài đặt hệ thống!');
+                }
+            });
+            
+            // Xử lý sự kiện submit form cài đặt thông báo
+            document.getElementById('notification-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    userSettings.notifications = {
+                        newBooking: document.getElementById('notify-new-booking').checked,
+                        payment: document.getElementById('notify-payment').checked,
+                        cancellation: document.getElementById('notify-cancellation').checked,
+                        review: document.getElementById('notify-review').checked
+                    };
+                    
+                    userSettings.notificationMethods = {
+                        web: document.getElementById('notify-web').checked,
+                        email: document.getElementById('notify-email').checked,
+                        sms: document.getElementById('notify-sms').checked
+                    };
+                    
+                    await updateDoc(doc(db, "settings", "system"), {
+                        notifications: userSettings.notifications,
+                        notificationMethods: userSettings.notificationMethods
+                    });
+                    
+                    alert('Cập nhật cài đặt thông báo thành công!');
+                } catch (error) {
+                    console.error("Lỗi khi cập nhật cài đặt thông báo:", error);
+                    alert('Đã xảy ra lỗi khi cập nhật cài đặt thông báo!');
+                }
+            });
+            
+            // Xử lý sự kiện submit form cài đặt bảo mật
+            document.getElementById('security-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    userSettings.security = {
+                        twoFactorAuth: document.getElementById('two-factor-auth').checked,
+                        sessionTimeout: document.getElementById('session-timeout').checked,
+                        timeoutDuration: parseInt(document.getElementById('timeout-duration').value),
+                        passwordPolicy: document.getElementById('password-policy').value,
+                        passwordExpiry: parseInt(document.getElementById('password-expiry').value)
+                    };
+                    
+                    await updateDoc(doc(db, "settings", "system"), {
+                        security: userSettings.security
+                    });
+                    
+                    alert('Cập nhật cài đặt bảo mật thành công!');
+                } catch (error) {
+                    console.error("Lỗi khi cập nhật cài đặt bảo mật:", error);
+                    alert('Đã xảy ra lỗi khi cập nhật cài đặt bảo mật!');
+                }
+            });
+            
+            // Xử lý sự kiện tạo backup
+            document.getElementById('create-backup-btn').addEventListener('click', async function() {
+                try {
+                    // Trong thực tế, bạn sẽ export dữ liệu từ Firestore
+                    // Ở đây chỉ tạo file giả lập để hiển thị giao diện
+                    const dummyData = {
+                        timestamp: new Date().toISOString(),
+                        collections: {
+                            users: [],
+                            tours: [],
+                            bookings: [],
+                            customers: [],
+                            settings: {}
+                        }
+                    };
+                    
+                    // Tạo tên file backup
+                    const now = new Date();
+                    const fileName = `backup_${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}.json`;
+                    
+                    // Chuyển đổi dữ liệu thành JSON
+                    const jsonData = JSON.stringify(dummyData);
+                    const blob = new Blob([jsonData], {type: 'application/json'});
+                    
+                    // Upload file lên Firebase Storage
+                    const storageRef = ref(storage, `backups/${fileName}`);
+                    await uploadBytes(storageRef, blob);
+                    
+                    alert('Tạo bản sao lưu thành công!');
+                    
+                    // Tải lại danh sách backup
+                    loadBackups();
+                } catch (error) {
+                    console.error("Lỗi khi tạo backup:", error);
+                    alert('Đã xảy ra lỗi khi tạo bản sao lưu!');
+                }
+            });
+            
+            // Xử lý sự kiện chọn file phục hồi
+            const restoreFileBtn = document.getElementById('restore-file-btn');
+            const restoreFile = document.getElementById('restore-file');
+            
+            restoreFileBtn.addEventListener('click', function() {
+                restoreFile.click();
+            });
+            
+            restoreFile.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    document.getElementById('restore-filename').textContent = this.files[0].name;
+                    document.getElementById('restore-btn').disabled = false;
+                }
+            });
+            
+            // Xử lý sự kiện phục hồi dữ liệu
+            document.getElementById('restore-btn').addEventListener('click', function() {
+                if (confirm('Bạn có chắc chắn muốn phục hồi dữ liệu? Dữ liệu hiện tại sẽ bị ghi đè.')) {
+                    alert('Chức năng phục hồi dữ liệu đang được phát triển.');
+                    // Trong thực tế, bạn sẽ đọc file và import dữ liệu vào Firestore
+                }
+            });
+            
+            // Xử lý sự kiện thêm người dùng mới
+            document.getElementById('add-user-btn').addEventListener('click', function() {
+                openUserModal();
+            });
+            
+            // Xử lý sự kiện đóng modal
+            const closeBtn = document.querySelector('.close');
+            closeBtn.addEventListener('click', function() {
+                closeUserModal();
+            });
+            
+            document.getElementById('user-cancel-btn').addEventListener('click', function() {
+                closeUserModal();
+            });
+            
+            // Xử lý sự kiện submit form người dùng
+            document.getElementById('user-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const userId = document.getElementById('user-id').value;
+                const email = document.getElementById('user-email').value;
+                const fullName = document.getElementById('user-fullname').value;
+                const role = document.getElementById('user-role').value;
+                const status = document.getElementById('user-status').value;
+                
+                try {
+                    if (userId) {
+                        // Cập nhật người dùng
+                        await updateDoc(doc(db, "users", userId), {
+                            fullName: fullName,
+                            role: role,
+                            status: status,
+                            updatedAt: new Date()
+                        });
+                        
+                        alert('Cập nhật người dùng thành công!');
+                    } else {
+                        // Thêm người dùng mới
+                        const password = document.getElementById('user-password').value;
+                        
+                        // Tạo tài khoản trong Authentication
+                        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                        const newUser = userCredential.user;
+                        
+                        // Lưu thông tin vào Firestore
+                        await setDoc(doc(db, "users", newUser.uid), {
+                            email: email,
+                            fullName: fullName,
+                            role: role,
+                            status: status,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        });
+                        
+                        alert('Thêm người dùng mới thành công!');
+                    }
+                    
+                    closeUserModal();
+                    loadUsers();
+                } catch (error) {
+                    console.error("Lỗi khi lưu thông tin người dùng:", error);
+                    
+                    if (error.code === 'auth/email-already-in-use') {
+                        alert('Email đã được sử dụng!');
+                    } else {
+                        alert('Đã xảy ra lỗi khi lưu thông tin người dùng!');
+                    }
+                }
+            });
+            
+            // Settings tab navigation
+            const settingsLinks = document.querySelectorAll('.settings-nav a');
+            const settingsSections = document.querySelectorAll('.settings-section');
+            
+            settingsLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and sections
+                    settingsLinks.forEach(link => {
+                        link.parentElement.classList.remove('active');
+                    });
+                    settingsSections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked link
+                    this.parentElement.classList.add('active');
+                    
+                    // Show corresponding section
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+
+        // Upload avatar
+        async function uploadAvatar() {
+            if (!selectedAvatarFile) return;
+            
+            try {
+                const storageRef = ref(storage, `avatars/${currentUser.uid}_${Date.now()}`);
+                await uploadBytes(storageRef, selectedAvatarFile);
+                const photoURL = await getDownloadURL(storageRef);
+                
+                // Cập nhật URL ảnh trong Firestore
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    photoURL: photoURL,
+                    updatedAt: new Date()
+                });
+                
+                // Cập nhật hiển thị trên sidebar
+                document.getElementById('admin-avatar').src = photoURL;
+                
+                console.log("Upload avatar thành công!");
+                selectedAvatarFile = null;
+            } catch (error) {
+                console.error("Lỗi khi upload avatar:", error);
+                alert('Đã xảy ra lỗi khi upload ảnh đại diện!');
+            }
+        }
+
+        // Mở modal thêm/sửa người dùng
+        function openUserModal(user = null) {
+            const modal = document.getElementById('user-modal');
+            const modalTitle = document.getElementById('user-modal-title');
+            const userIdInput = document.getElementById('user-id');
+            const userFullnameInput = document.getElementById('user-fullname');
+            const userEmailInput = document.getElementById('user-email');
+            const passwordGroup = document.getElementById('password-group');
+            const userRoleSelect = document.getElementById('user-role');
+            const userStatusSelect = document.getElementById('user-status');
+            
+            if (user) {
+                modalTitle.textContent = 'Chỉnh sửa người dùng';
+                userIdInput.value = user.id;
+                userFullnameInput.value = user.fullName || '';
+                userEmailInput.value = user.email || '';
+                userEmailInput.readOnly = true;
+                passwordGroup.style.display = 'none'; // Ẩn trường mật khẩu khi sửa
+                userRoleSelect.value = user.role || 'staff';
+                userStatusSelect.value = user.status || 'active';
+            } else {
+                modalTitle.textContent = 'Thêm người dùng mới';
+                document.getElementById('user-form').reset();
+                userIdInput.value = '';
+                userEmailInput.readOnly = false;
+                passwordGroup.style.display = 'block'; // Hiện trường mật khẩu khi thêm mới
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        // Đóng modal
+        function closeUserModal() {
+            document.getElementById('user-modal').style.display = 'none';
+        }
+
+        // Đăng ký các hàm toàn cục để sử dụng trong HTML
+        window.editUser = function(userId) {
+            const user = usersList.find(u => u.id === userId);
+            if (user) {
+                openUserModal(user);
+            }
+        };
+
+        window.deleteUser = async function(userId) {
+            if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+                try {
+                    // Trong môi trường thực tế, bạn cần quyền Admin SDK để xóa user trong Authentication
+                    // Ở đây chỉ xóa trong Firestore
+                    await deleteDoc(doc(db, "users", userId));
+                    alert('Xóa người dùng thành công!');
+                    loadUsers();
+                } catch (error) {
+                    console.error("Lỗi khi xóa người dùng:", error);
+                    alert('Đã xảy ra lỗi khi xóa người dùng!');
+                }
+            }
+        };
+
+        window.downloadBackup = function(downloadURL) {
+            // Tạo một thẻ a ẩn để tải file
+            const a = document.createElement('a');
+            a.href = downloadURL;
+            a.download = '';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+
+        window.prepareRestore = function(backupName, downloadURL) {
+            if (confirm(`Bạn có chắc chắn muốn phục hồi từ bản sao lưu "${backupName}"?`)) {
+                alert('Chức năng phục hồi dữ liệu đang được phát triển.');
+                // Trong thực tế, bạn sẽ tải file về và import dữ liệu vào Firestore
+            }
+        };
+
+        window.deleteBackup = async function(backupName) {
+            if (confirm(`Bạn có chắc chắn muốn xóa bản sao lưu "${backupName}"?`)) {
+                try {
+                    const backupRef = ref(storage, `backups/${backupName}`);
+                    await deleteObject(backupRef);
+                    alert('Xóa bản sao lưu thành công!');
+                    loadBackups();
+                } catch (error) {
+                    console.error("Lỗi khi xóa bản sao lưu:", error);
+                    alert('Đã xảy ra lỗi khi xóa bản sao lưu!');
+                }
+            }
+        };
+    </script>
+    <script src="script.js"></script>
+    <style>
+        /* Thêm CSS cho modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 5px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .close {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+    </style>
+</body>
+</html>
+        

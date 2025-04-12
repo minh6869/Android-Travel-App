@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Hệ thống Quản lý Tour Du lịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-plane"></i>
+            <h1>Hệ thống Quản lý Tour Du lịch</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="admin-profile">
+                <img src="admin-avatar.png" alt="Admin avatar" class="admin-avatar" id="admin-avatar">
+                <h3 id="admin-name">Admin</h3>
+                <p id="admin-role">Quản trị viên</p>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li class="active"><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="quan-ly-tour.html"><i class="fas fa-map-marked-alt"></i> Quản lý Tour</a></li>
+                    <li><a href="khach-hang.html"><i class="fas fa-users"></i> Khách hàng</a></li>
+                    <li><a href="thong-ke.html"><i class="fas fa-chart-bar"></i> Thống kê</a></li>
+                    <li><a href="cai-dat.html"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-header">
+                <h2>Bảng điều khiển</h2>
+                <div class="date-display">
+                    <i class="far fa-calendar-alt"></i>
+                    <span id="current-date">10/04/2025</span>
+                </div>
+            </div>
+            
+            <!-- Thống kê tổng quan -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3>Tổng khách hàng</h3>
+                        <p class="stat-number" id="total-customers">0</p>
+                        <p class="stat-change positive" id="customers-change">+0% <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <div class="stat-info">
+                        <h3>Tour đã bán</h3>
+                        <p class="stat-number" id="total-tours-sold">0</p>
+                        <p class="stat-change positive" id="tours-change">+0% <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="stat-info">
+                        <h3>Doanh thu</h3>
+                        <p class="stat-number" id="total-revenue">0 đ</p>
+                        <p class="stat-change positive" id="revenue-change">+0% <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-info">
+                        <h3>Đánh giá trung bình</h3>
+                        <p class="stat-number" id="average-rating">0/5</p>
+                        <p class="stat-change" id="rating-change">0 <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Truy cập nhanh -->
+            <div class="quick-actions">
+                <h3><i class="fas fa-bolt"></i> Truy cập nhanh</h3>
+                <div class="action-buttons">
+                    <a href="quan-ly-tour.html?action=add" class="action-button">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Thêm tour mới</span>
+                    </a>
+                    <a href="khach-hang.html?action=add" class="action-button">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Thêm khách hàng</span>
+                    </a>
+                    <a href="#" class="action-button">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>Đặt tour</span>
+                    </a>
+                    <a href="thong-ke.html" class="action-button">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Xem báo cáo</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <!-- Đơn đặt tour mới nhất -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-shopping-cart"></i> Đơn đặt tour mới nhất</h3>
+                        <a href="#" class="view-all">Xem tất cả <i class="fas fa-angle-right"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Tour</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-bookings">
+                                <!-- Dữ liệu sẽ được load từ Firebase -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Tour đang hot -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-fire"></i> Tour đang hot</h3>
+                        <a href="quan-ly-tour.html" class="view-all">Xem tất cả <i class="fas fa-angle-right"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <div class="hot-tours" id="hot-tours">
+                            <!-- Dữ liệu sẽ được load từ Firebase -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lịch tour sắp khởi hành -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-plane-departure"></i> Lịch tour sắp khởi hành</h3>
+                        <a href="#" class="view-all">Xem tất cả <i class="fas fa-angle-right"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Tour</th>
+                                    <th>Ngày khởi hành</th>
+                                    <th>Hướng dẫn viên</th>
+                                    <th>Số khách</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="upcoming-tours">
+                                <!-- Dữ liệu sẽ được load từ Firebase -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Thông báo và nhắc nhở -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bell"></i> Thông báo và nhắc nhở</h3>
+                        <a href="#" class="view-all">Xem tất cả <i class="fas fa-angle-right"></i></a>
+                    </div>
+                    <div class="card-content">
+                        <div class="notification-list" id="notifications">
+                            <!-- Dữ liệu sẽ được load từ Firebase -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Firebase -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { collection, getDocs, query, orderBy, limit, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Đã đăng nhập:", user.email);
+                // Tải thông tin người dùng
+                loadUserProfile(user.uid);
+            } else {
+                // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Hiển thị ngày hiện tại
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentDateElement = document.getElementById('current-date');
+            const today = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            currentDateElement.textContent = today.toLocaleDateString('vi-VN', options);
+            
+            // Tải dữ liệu từ Firebase
+            loadDashboardData();
+        });
+
+        // Tải thông tin người dùng
+        async function loadUserProfile(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    document.getElementById('admin-name').textContent = userData.fullName || 'Admin';
+                    document.getElementById('admin-role').textContent = userData.role || 'Quản trị viên';
+                    if (userData.photoURL) {
+                        document.getElementById('admin-avatar').src = userData.photoURL;
+                    }
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải thông tin người dùng:", error);
+            }
+        }
+
+        // Tải dữ liệu tổng quan
+        async function loadDashboardData() {
+            try {
+                // Tải số lượng khách hàng
+                const customersSnapshot = await getDocs(collection(db, "customers"));
+                const totalCustomers = customersSnapshot.size;
+                document.getElementById('total-customers').textContent = totalCustomers.toLocaleString('vi-VN');
+                document.getElementById('customers-change').innerHTML = '+12.5% <span>so với tháng trước</span>';
+                
+                // Tải số lượng tour đã bán
+                const bookingsSnapshot = await getDocs(collection(db, "bookings"));
+                const totalBookings = bookingsSnapshot.size;
+                document.getElementById('total-tours-sold').textContent = totalBookings.toLocaleString('vi-VN');
+                document.getElementById('tours-change').innerHTML = '+8.3% <span>so với tháng trước</span>';
+                
+                // Tính tổng doanh thu
+                let totalRevenue = 0;
+                bookingsSnapshot.forEach(doc => {
+                    const bookingData = doc.data();
+                    if (bookingData.totalPrice) {
+                        totalRevenue += bookingData.totalPrice;
+                    }
+                });
+                
+                // Hiển thị doanh thu theo định dạng tiền tệ Việt Nam
+                document.getElementById('total-revenue').textContent = (totalRevenue / 1000000).toFixed(2) + ' triệu đ';
+                document.getElementById('revenue-change').innerHTML = '+15.2% <span>so với tháng trước</span>';
+                
+                // Tính đánh giá trung bình
+                const ratingsSnapshot = await getDocs(collection(db, "ratings"));
+                let totalRating = 0;
+                let ratingCount = 0;
+                
+                ratingsSnapshot.forEach(doc => {
+                    const ratingData = doc.data();
+                    if (ratingData.rating) {
+                        totalRating += ratingData.rating;
+                        ratingCount++;
+                    }
+                });
+                
+                const avgRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : 0;
+                document.getElementById('average-rating').textContent = avgRating + '/5';
+                document.getElementById('rating-change').innerHTML = '-0.1 <span>so với tháng trước</span>';
+                document.getElementById('rating-change').className = 'stat-change negative';
+                
+                // Tải đơn đặt tour mới nhất
+                await loadRecentBookings();
+                
+                // Tải tour đang hot
+                await loadHotTours();
+                
+                // Tải lịch tour sắp khởi hành
+                await loadUpcomingTours();
+                
+                // Tải thông báo
+                await loadNotifications();
+                
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu tổng quan:", error);
+            }
+        }
+
+        // Tải đơn đặt tour mới nhất
+        async function loadRecentBookings() {
+            try {
+                const q = query(collection(db, "bookings"), orderBy("bookingDate", "desc"), limit(3));
+                const bookingsSnapshot = await getDocs(q);
+                
+                let html = '';
+                bookingsSnapshot.forEach(doc => {
+                    const booking = doc.data();
+                    const bookingDate = booking.bookingDate ? new Date(booking.bookingDate.seconds * 1000) : new Date();
+                    const formattedDate = bookingDate.toLocaleDateString('vi-VN');
+                    
+                    let statusClass = 'pending';
+                    if (booking.status === 'confirmed') {
+                        statusClass = 'active';
+                    } else if (booking.status === 'cancelled') {
+                        statusClass = 'inactive';
+                    }
+                    
+                    html += `
+                    <tr>
+                        <td>#${doc.id.substring(0, 5)}</td>
+                        <td>${booking.customerName || 'N/A'}</td>
+                        <td>${booking.tourName || 'N/A'}</td>
+                        <td>${formattedDate}</td>
+                        <td><span class="status ${statusClass}">${booking.statusText || 'Chờ xác nhận'}</span></td>
+                    </tr>
+                    `;
+                });
+                
+                if (html === '') {
+                    html = '<tr><td colspan="5" style="text-align: center;">Không có đơn đặt tour</td></tr>';
+                }
+                
+                document.getElementById('recent-bookings').innerHTML = html;
+            } catch (error) {
+                console.error("Lỗi khi tải đơn đặt tour mới nhất:", error);
+            }
+        }
+
+        // Tải tour đang hot
+        async function loadHotTours() {
+            try {
+                const q = query(collection(db, "tours"), orderBy("soldCount", "desc"), limit(3));
+                const toursSnapshot = await getDocs(q);
+                
+                let html = '';
+                toursSnapshot.forEach(doc => {
+                    const tour = doc.data();
+                    const hotBadge = tour.isHot ? '<span class="tour-badge">Hot</span>' : '';
+                    
+                    html += `
+                    <div class="hot-tour-item">
+                        <div class="tour-image">
+                            <img src="${tour.imageUrl || 'default-tour.jpg'}" alt="${tour.name}">
+                            ${hotBadge}
+                        </div>
+                        <div class="tour-info">
+                            <h4>${tour.name}</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> ${tour.destination}</p>
+                            <p><i class="fas fa-calendar-alt"></i> ${tour.duration || 'N/A'}</p>
+                            <div class="tour-stats">
+                                <span><i class="fas fa-users"></i> Đã bán: ${tour.soldCount || 0}/${tour.capacity || 0}</span>
+                                <span class="tour-price">${(tour.price / 1000000).toFixed(1)}M đ</span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                });
+                
+                if (html === '') {
+                    html = '<p style="text-align: center;">Không có tour nào</p>';
+                }
+                
+                document.getElementById('hot-tours').innerHTML = html;
+            } catch (error) {
+                console.error("Lỗi khi tải tour đang hot:", error);
+            }
+        }
+
+        // Tải lịch tour sắp khởi hành
+        async function loadUpcomingTours() {
+            try {
+                const now = new Date();
+                const q = query(collection(db, "tourSchedules"), orderBy("departureDate", "asc"), limit(3));
+                const schedulesSnapshot = await getDocs(q);
+                
+                let html = '';
+                schedulesSnapshot.forEach(doc => {
+                    const schedule = doc.data();
+                    const departureDate = schedule.departureDate ? new Date(schedule.departureDate.seconds * 1000) : new Date();
+                    const formattedDate = departureDate.toLocaleDateString('vi-VN');
+                    
+                    let statusClass = 'pending';
+                    let statusText = 'Đang chuẩn bị';
+                    
+                    if (schedule.status === 'ready') {
+                        statusClass = 'active';
+                        statusText = 'Sẵn sàng';
+                    }
+                    
+                    html += `
+                    <tr>
+                        <td>${schedule.tourName || 'N/A'}</td>
+                        <td>${formattedDate}</td>
+                        <td>${schedule.guideName || 'N/A'}</td>
+                        <td>${schedule.currentParticipants || 0}/${schedule.maxParticipants || 0}</td>
+                        <td><span class="status ${statusClass}">${statusText}</span></td>
+                    </tr>
+                    `;
+                });
+                
+                if (html === '') {
+                    html = '<tr><td colspan="5" style="text-align: center;">Không có lịch tour sắp khởi hành</td></tr>';
+                }
+                
+                document.getElementById('upcoming-tours').innerHTML = html;
+            } catch (error) {
+                console.error("Lỗi khi tải lịch tour sắp khởi hành:", error);
+            }
+        }
+
+        // Tải thông báo
+        async function loadNotifications() {
+            try {
+                const q = query(collection(db, "notifications"), orderBy("timestamp", "desc"), limit(3));
+                const notificationsSnapshot = await getDocs(q);
+                
+                let html = '';
+                notificationsSnapshot.forEach(doc => {
+                    const notification = doc.data();
+                    const timestamp = notification.timestamp ? new Date(notification.timestamp.seconds * 1000) : new Date();
+                    
+                    let timeAgo = getTimeAgo(timestamp);
+                    let iconClass = 'info';
+                    let iconHtml = '<i class="fas fa-info-circle"></i>';
+                    
+                    if (notification.type === 'warning') {
+                        iconClass = 'warning';
+                        iconHtml = '<i class="fas fa-exclamation-triangle"></i>';
+                    } else if (notification.type === 'success') {
+                        iconClass = 'success';
+                        iconHtml = '<i class="fas fa-check-circle"></i>';
+                    }
+                    
+                    const unreadClass = notification.read ? '' : 'unread';
+                    
+                    html += `
+                    <div class="notification-item ${unreadClass}" data-id="${doc.id}">
+                        <div class="notification-icon ${iconClass}">
+                            ${iconHtml}
+                        </div>
+                        <div class="notification-content">
+                            <h4>${notification.title || 'Thông báo'}</h4>
+                            <p>${notification.message || ''}</p>
+                            <span class="notification-time">${timeAgo}</span>
+                        </div>
+                        <div class="notification-actions">
+                            <button class="btn-view" onclick="markNotificationAsRead('${doc.id}')"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    `;
+                });
+                
+                if (html === '') {
+                    html = '<p style="text-align: center;">Không có thông báo nào</p>';
+                }
+                
+                document.getElementById('notifications').innerHTML = html;
+            } catch (error) {
+                console.error("Lỗi khi tải thông báo:", error);
+            }
+        }
+
+        // Tính thời gian tương đối
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) {
+                return 'Vừa xong';
+            }
+            
+            const diffInMinutes = Math.floor(diffInSeconds / 60);
+            if (diffInMinutes < 60) {
+                return `${diffInMinutes} phút trước`;
+            }
+            
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) {
+                return `${diffInHours} giờ trước`;
+            }
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 30) {
+                return `${diffInDays} ngày trước`;
+            }
+            
+            const diffInMonths = Math.floor(diffInDays / 30);
+            return `${diffInMonths} tháng trước`;
+        }
+
+        // Đăng ký hàm toàn cục để sử dụng trong HTML
+        window.markNotificationAsRead = async function(notificationId) {
+            // Cập nhật trạng thái đã đọc trong Firebase
+            // Bạn cần thêm code cập nhật vào Firestore ở đây
+            console.log("Đánh dấu thông báo đã đọc:", notificationId);
+        };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

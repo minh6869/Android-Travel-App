@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống kê - Hệ thống Quản lý Tour Du lịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-plane"></i>
+            <h1>Hệ thống Quản lý Tour Du lịch</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="admin-profile">
+                <img src="admin-avatar.png" alt="Admin avatar" class="admin-avatar" id="admin-avatar">
+                <h3 id="admin-name">Admin</h3>
+                <p id="admin-role">Quản trị viên</p>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="quan-ly-tour.html"><i class="fas fa-map-marked-alt"></i> Quản lý Tour</a></li>
+                    <li><a href="khach-hang.html"><i class="fas fa-users"></i> Khách hàng</a></li>
+                    <li class="active"><a href="thong-ke.html"><i class="fas fa-chart-bar"></i> Thống kê</a></li>
+                    <li><a href="cai-dat.html"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-header">
+                <h2>Thống kê</h2>
+                <div class="date-filter">
+                    <label for="date-range">Thời gian:</label>
+                    <select id="date-range">
+                        <option value="7">7 ngày qua</option>
+                        <option value="30" selected>30 ngày qua</option>
+                        <option value="90">3 tháng qua</option>
+                        <option value="180">6 tháng qua</option>
+                        <option value="365">1 năm qua</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3>Tổng khách hàng</h3>
+                        <p class="stat-number" id="total-customers">0</p>
+                        <p class="stat-change positive" id="customers-change">+0% <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <div class="stat-info">
+                        <h3>Tour đã bán</h3>
+                        <p class="stat-number" id="total-tours-sold">0</p>
+                        <p class="stat-change positive" id="tours-change">+0% <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="stat-info">
+                        <h3>Doanh thu</h3>
+                        <p class="stat-number" id="total-revenue">0 đ</p>
+                        <p class="stat-change positive" id="revenue-change">+0% <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-info">
+                        <h3>Đánh giá trung bình</h3>
+                        <p class="stat-number" id="average-rating">0/5</p>
+                        <p class="stat-change" id="rating-change">0 <span>so với tháng trước</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Doanh thu theo tháng</h3>
+                    <canvas id="revenue-chart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <h3>Tour bán chạy nhất</h3>
+                    <canvas id="top-tours-chart"></canvas>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Phân bố khách hàng theo khu vực</h3>
+                    <canvas id="customer-distribution-chart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <h3>Đánh giá của khách hàng</h3>
+                    <canvas id="ratings-chart"></canvas>
+                </div>
+            </div>
+            
+            <div class="recent-bookings">
+                <h3>Đặt tour gần đây</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Khách hàng</th>
+                            <th>Tour</th>
+                            <th>Ngày đặt</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-bookings-table">
+                        <!-- Dữ liệu sẽ được load từ Firebase -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Firebase -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import {
+            collection,
+            getDocs,
+            getDoc,
+            doc,
+            query,
+            orderBy,
+            limit,
+            where,
+            Timestamp
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Biến toàn cục cho biểu đồ
+        let revenueChart = null;
+        let topToursChart = null;
+        let customerDistributionChart = null;
+        let ratingsChart = null;
+        let currentDateRange = 30; // Mặc định 30 ngày
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Đã đăng nhập:", user.email);
+                // Tải thông tin người dùng
+                loadUserProfile(user.uid);
+                // Tải dữ liệu thống kê
+                loadStatistics(currentDateRange);
+            } else {
+                // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Tải thông tin người dùng
+        async function loadUserProfile(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    document.getElementById('admin-name').textContent = userData.fullName || 'Admin';
+                    document.getElementById('admin-role').textContent = userData.role || 'Quản trị viên';
+                    if (userData.photoURL) {
+                        document.getElementById('admin-avatar').src = userData.photoURL;
+                    }
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải thông tin người dùng:", error);
+            }
+        }
+
+        // Tải dữ liệu thống kê
+        async function loadStatistics(days) {
+            try {
+                // Tính ngày bắt đầu dựa trên số ngày
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() - days);
+                const startTimestamp = Timestamp.fromDate(startDate);
+                
+                // Tải số lượng khách hàng
+                await loadCustomerStats(startTimestamp);
+                
+                // Tải dữ liệu tour đã bán
+                await loadTourStats(startTimestamp);
+                
+                // Tải dữ liệu doanh thu
+                await loadRevenueStats(startTimestamp);
+                
+                // Tải dữ liệu đánh giá
+                await loadRatingStats(startTimestamp);
+                
+                // Tải biểu đồ
+                await loadCharts(startTimestamp);
+                
+                // Tải đơn đặt tour gần đây
+                await loadRecentBookings();
+                
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu thống kê:", error);
+            }
+        }
+
+        // Tải thống kê khách hàng
+        async function loadCustomerStats(startTimestamp) {
+            try {
+                // Tổng số khách hàng
+                const customersSnapshot = await getDocs(collection(db, "customers"));
+                const totalCustomers = customersSnapshot.size;
+                document.getElementById('total-customers').textContent = totalCustomers.toLocaleString('vi-VN');
+                
+                // Khách hàng mới trong khoảng thời gian
+                const newCustomersQuery = query(
+                    collection(db, "customers"),
+                    where("createdAt", ">=", startTimestamp)
+                );
+                const newCustomersSnapshot = await getDocs(newCustomersQuery);
+                const newCustomers = newCustomersSnapshot.size;
+                
+                // Tính phần trăm tăng trưởng
+                const percentChange = totalCustomers > 0 ? (newCustomers / totalCustomers * 100).toFixed(1) : 0;
+                const changeElement = document.getElementById('customers-change');
+                changeElement.innerHTML = `+${percentChange}% <span>trong ${currentDateRange} ngày qua</span>`;
+                changeElement.className = 'stat-change positive';
+            } catch (error) {
+                console.error("Lỗi khi tải thống kê khách hàng:", error);
+            }
+        }
+
+        // Tải thống kê tour
+        async function loadTourStats(startTimestamp) {
+            try {
+                // Tổng số đơn đặt tour
+                const bookingsQuery = query(collection(db, "bookings"));
+                const bookingsSnapshot = await getDocs(bookingsQuery);
+                const totalBookings = bookingsSnapshot.size;
+                document.getElementById('total-tours-sold').textContent = totalBookings.toLocaleString('vi-VN');
+                
+                // Đơn đặt tour trong khoảng thời gian
+                const recentBookingsQuery = query(
+                    collection(db, "bookings"),
+                    where("bookingDate", ">=", startTimestamp)
+                );
+                const recentBookingsSnapshot = await getDocs(recentBookingsQuery);
+                const recentBookings = recentBookingsSnapshot.size;
+                
+                // Tính phần trăm tăng trưởng
+                const percentChange = totalBookings > 0 ? (recentBookings / totalBookings * 100).toFixed(1) : 0;
+                const changeElement = document.getElementById('tours-change');
+                changeElement.innerHTML = `+${percentChange}% <span>trong ${currentDateRange} ngày qua</span>`;
+                changeElement.className = 'stat-change positive';
+            } catch (error) {
+                console.error("Lỗi khi tải thống kê tour:", error);
+            }
+        }
+
+        // Tải thống kê doanh thu
+        async function loadRevenueStats(startTimestamp) {
+            try {
+                // Tổng doanh thu
+                const bookingsSnapshot = await getDocs(collection(db, "bookings"));
+                let totalRevenue = 0;
+                let recentRevenue = 0;
+                
+                bookingsSnapshot.forEach(doc => {
+                    const booking = doc.data();
+                    if (booking.totalPrice) {
+                        totalRevenue += booking.totalPrice;
+                        
+                        // Tính doanh thu trong khoảng thời gian
+                        if (booking.bookingDate && booking.bookingDate.toDate() >= startTimestamp.toDate()) {
+                            recentRevenue += booking.totalPrice;
+                        }
+                    }
+                });
+                
+                // Hiển thị doanh thu
+                const formattedRevenue = (totalRevenue / 1000000).toFixed(2);
+                document.getElementById('total-revenue').textContent = formattedRevenue + ' triệu đ';
+                
+                // Tính phần trăm tăng trưởng
+                const percentChange = totalRevenue > 0 ? (recentRevenue / totalRevenue * 100).toFixed(1) : 0;
+                const changeElement = document.getElementById('revenue-change');
+                changeElement.innerHTML = `+${percentChange}% <span>trong ${currentDateRange} ngày qua</span>`;
+                changeElement.className = 'stat-change positive';
+            } catch (error) {
+                console.error("Lỗi khi tải thống kê doanh thu:", error);
+            }
+        }
+
+        // Tải thống kê đánh giá
+        async function loadRatingStats(startTimestamp) {
+            try {
+                // Tính đánh giá trung bình
+                const ratingsSnapshot = await getDocs(collection(db, "ratings"));
+                let totalRating = 0;
+                let ratingCount = 0;
+                let recentTotalRating = 0;
+                let recentRatingCount = 0;
+                
+                ratingsSnapshot.forEach(doc => {
+                    const rating = doc.data();
+                    if (rating.rating) {
+                        totalRating += rating.rating;
+                        ratingCount++;
+                        
+                        // Tính đánh giá trong khoảng thời gian
+                        if (rating.createdAt && rating.createdAt.toDate() >= startTimestamp.toDate()) {
+                            recentTotalRating += rating.rating;
+                            recentRatingCount++;
+                        }
+                    }
+                });
+                
+                const avgRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : 0;
+                document.getElementById('average-rating').textContent = avgRating + '/5';
+                
+                // Tính sự thay đổi đánh giá
+                let ratingChange = 0;
+                if (recentRatingCount > 0 && ratingCount > recentRatingCount) {
+                    const recentAvg = recentTotalRating / recentRatingCount;
+                    const previousAvg = (totalRating - recentTotalRating) / (ratingCount - recentRatingCount);
+                    ratingChange = (recentAvg - previousAvg).toFixed(1);
+                }
+                
+                const changeElement = document.getElementById('rating-change');
+                if (ratingChange > 0) {
+                    changeElement.innerHTML = `+${ratingChange} <span>trong ${currentDateRange} ngày qua</span>`;
+                    changeElement.className = 'stat-change positive';
+                } else if (ratingChange < 0) {
+                    changeElement.innerHTML = `${ratingChange} <span>trong ${currentDateRange} ngày qua</span>`;
+                    changeElement.className = 'stat-change negative';
+                } else {
+                    changeElement.innerHTML = `${ratingChange} <span>trong ${currentDateRange} ngày qua</span>`;
+                    changeElement.className = 'stat-change';
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải thống kê đánh giá:", error);
+            }
+        }
+
+        // Tải biểu đồ
+        async function loadCharts(startTimestamp) {
+            try {
+                // Biểu đồ doanh thu theo tháng
+                await loadRevenueChart();
+                
+                // Biểu đồ tour bán chạy nhất
+                await loadTopToursChart();
+                
+                // Biểu đồ phân bố khách hàng theo khu vực
+                await loadCustomerDistributionChart();
+                
+                // Biểu đồ đánh giá
+                await loadRatingsChart();
+            } catch (error) {
+                console.error("Lỗi khi tải biểu đồ:", error);
+            }
+        }
+
+        // Tải biểu đồ doanh thu theo tháng
+        async function loadRevenueChart() {
+            try {
+                const bookingsSnapshot = await getDocs(collection(db, "bookings"));
+                
+                // Tạo đối tượng để lưu doanh thu theo tháng
+                const revenueByMonth = {};
+                const monthNames = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+                
+                // Khởi tạo doanh thu cho tất cả các tháng là 0
+                monthNames.forEach((month, index) => {
+                    revenueByMonth[index] = 0;
+                });
+                
+                // Tính doanh thu theo tháng
+                bookingsSnapshot.forEach(doc => {
+                    const booking = doc.data();
+                    if (booking.bookingDate && booking.totalPrice) {
+                        const date = booking.bookingDate.toDate();
+                        const month = date.getMonth();
+                        revenueByMonth[month] += booking.totalPrice / 1000000; // Chuyển đổi sang triệu đồng
+                    }
+                });
+                
+                // Dữ liệu cho biểu đồ
+                const data = Object.values(revenueByMonth).map(value => parseFloat(value.toFixed(2)));
+                
+                // Vẽ biểu đồ
+                const ctx = document.getElementById('revenue-chart').getContext('2d');
+                
+                if (revenueChart) {
+                    revenueChart.destroy();
+                }
+                
+                revenueChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: monthNames,
+                        datasets: [{
+                            label: 'Doanh thu (triệu đồng)',
+                            data: data,
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            } catch (error) {
+                console.error("Lỗi khi tải biểu đồ doanh thu:", error);
+            }
+        }
+
+        // Tải biểu đồ tour bán chạy nhất
+        async function loadTopToursChart() {
+            try {
+                // Lấy top 5 tour bán chạy nhất
+                const q = query(collection(db, "tours"), orderBy("soldCount", "desc"), limit(5));
+                const toursSnapshot = await getDocs(q);
+                
+                const tourNames = [];
+                const tourSales = [];
+                
+                toursSnapshot.forEach(doc => {
+                    const tour = doc.data();
+                    tourNames.push(tour.name || 'N/A');
+                    tourSales.push(tour.soldCount || 0);
+                });
+                
+                // Vẽ biểu đồ
+                const ctx = document.getElementById('top-tours-chart').getContext('2d');
+                
+                if (topToursChart) {
+                    topToursChart.destroy();
+                }
+                
+                topToursChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: tourNames,
+                        datasets: [{
+                            label: 'Số lượng bán',
+                            data: tourSales,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y'
+                    }
+                });
+            } catch (error) {
+                console.error("Lỗi khi tải biểu đồ tour bán chạy:", error);
+            }
+        }
+
+        // Tải biểu đồ phân bố khách hàng theo khu vực
+        async function loadCustomerDistributionChart() {
+            try {
+                const customersSnapshot = await getDocs(collection(db, "customers"));
+                
+                // Tạo đối tượng để lưu số lượng khách hàng theo khu vực
+                const regionCounts = {
+                    'Miền Bắc': 0,
+                    'Miền Trung': 0,
+                    'Miền Nam': 0,
+                    'Nước ngoài': 0
+                };
+                
+                // Hàm xác định khu vực dựa trên địa chỉ
+                function getRegion(address) {
+                    if (!address) return 'Miền Bắc';
+                    
+                    address = address.toLowerCase();
+                    
+                    // Danh sách các tỉnh/thành phố theo khu vực
+                    const northCities = ['hà nội', 'hải phòng', 'quảng ninh', 'hải dương', 'bắc giang', 'bắc ninh', 'thái nguyên'];
+                    const centralCities = ['đà nẵng', 'huế', 'quảng nam', 'quảng ngãi', 'bình định', 'phú yên', 'khánh hòa', 'nha trang'];
+                    const southCities = ['hồ chí minh', 'sài gòn', 'bình dương', 'đồng nai', 'bà rịa', 'vũng tàu', 'cần thơ', 'long an'];
+                    
+                    if (northCities.some(city => address.includes(city))) {
+                        return 'Miền Bắc';
+                    } else if (centralCities.some(city => address.includes(city))) {
+                        return 'Miền Trung';
+                    } else if (southCities.some(city => address.includes(city))) {
+                        return 'Miền Nam';
+                    } else if (address.includes('nước ngoài') || !address.match(/[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i)) {
+                        return 'Nước ngoài';
+                    } else {
+                        // Mặc định là Miền Bắc nếu không xác định được
+                        return 'Miền Bắc';
+                    }
+                }
+                
+                // Phân loại khách hàng theo khu vực
+                customersSnapshot.forEach(doc => {
+                    const customer = doc.data();
+                    const region = getRegion(customer.address);
+                    regionCounts[region]++;
+                });
+                
+                // Vẽ biểu đồ
+                const ctx = document.getElementById('customer-distribution-chart').getContext('2d');
+                
+                if (customerDistributionChart) {
+                    customerDistributionChart.destroy();
+                }
+                
+                customerDistributionChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(regionCounts),
+                        datasets: [{
+                            data: Object.values(regionCounts),
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            } catch (error) {
+                console.error("Lỗi khi tải biểu đồ phân bố khách hàng:", error);
+            }
+        }
+
+        // Tải biểu đồ đánh giá
+        async function loadRatingsChart() {
+            try {
+                const ratingsSnapshot = await getDocs(collection(db, "ratings"));
+                
+                // Tạo đối tượng để lưu số lượng đánh giá theo số sao
+                const ratingCounts = {
+                    '5 sao': 0,
+                    '4 sao': 0,
+                    '3 sao': 0,
+                    '2 sao': 0,
+                    '1 sao': 0
+                };
+                
+                // Phân loại đánh giá theo số sao
+                ratingsSnapshot.forEach(doc => {
+                    const rating = doc.data();
+                    if (rating.rating) {
+                        const stars = Math.round(rating.rating);
+                        ratingCounts[`${stars} sao`]++;
+                    }
+                });
+                
+                // Vẽ biểu đồ
+                const ctx = document.getElementById('ratings-chart').getContext('2d');
+                
+                if (ratingsChart) {
+                    ratingsChart.destroy();
+                }
+                
+                ratingsChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(ratingCounts),
+                        datasets: [{
+                            label: 'Số lượng đánh giá',
+                            data: Object.values(ratingCounts),
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(255, 159, 64, 0.7)',
+                                'rgba(255, 99, 132, 0.7)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            } catch (error) {
+                console.error("Lỗi khi tải biểu đồ đánh giá:", error);
+            }
+        }
+
+        // Tải danh sách đặt tour gần đây
+        async function loadRecentBookings() {
+            try {
+                const q = query(collection(db, "bookings"), orderBy("bookingDate", "desc"), limit(5));
+                const bookingsSnapshot = await getDocs(q);
+                
+                let html = '';
+                bookingsSnapshot.forEach(doc => {
+                    const booking = doc.data();
+                    const bookingDate = booking.bookingDate ? new Date(booking.bookingDate.seconds * 1000) : new Date();
+                    const formattedDate = bookingDate.toLocaleDateString('vi-VN');
+                    
+                    let statusClass = 'pending';
+                    let statusText = 'Chờ thanh toán';
+                    
+                    if (booking.status === 'paid') {
+                        statusClass = 'active';
+                        statusText = 'Đã thanh toán';
+                    } else if (booking.status === 'cancelled') {
+                        statusClass = 'inactive';
+                        statusText = 'Đã hủy';
+                    }
+                    
+                    const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(booking.totalPrice || 0);
+                    
+                    html += `
+                    <tr>
+                        <td>#${doc.id.substring(0, 5)}</td>
+                        <td>${booking.customerName || 'N/A'}</td>
+                        <td>${booking.tourName || 'N/A'}</td>
+                        <td>${formattedDate}</td>
+                        <td>${booking.participants || 1}</td>
+                        <td>${formattedPrice}</td>
+                        <td><span class="status ${statusClass}">${statusText}</span></td>
+                    </tr>
+                    `;
+                });
+                
+                if (html === '') {
+                    html = '<tr><td colspan="7" style="text-align: center;">Không có đơn đặt tour nào</td></tr>';
+                }
+
+                document.getElementById('recent-bookings-table').innerHTML = html;
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách đặt tour gần đây:", error);
+            }
+        }
+
+        // Xử lý sự kiện khi DOM đã tải xong
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý sự kiện thay đổi khoảng thời gian
+            const dateRangeSelect = document.getElementById('date-range');
+            dateRangeSelect.addEventListener('change', function() {
+                currentDateRange = parseInt(this.value);
+                loadStatistics(currentDateRange);
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

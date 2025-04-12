@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Khách hàng - Hệ thống Quản lý Tour Du lịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-plane"></i>
+            <h1>Hệ thống Quản lý Tour Du lịch</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="admin-profile">
+                <img src="admin-avatar.png" alt="Admin avatar" class="admin-avatar" id="admin-avatar">
+                <h3 id="admin-name">Admin</h3>
+                <p id="admin-role">Quản trị viên</p>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li><a href="quan-ly-tour.html"><i class="fas fa-map-marked-alt"></i> Quản lý Tour</a></li>
+                    <li class="active"><a href="khach-hang.html"><i class="fas fa-users"></i> Khách hàng</a></li>
+                    <li><a href="thong-ke.html"><i class="fas fa-chart-bar"></i> Thống kê</a></li>
+                    <li><a href="cai-dat.html"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-header">
+                <h2>Quản lý Khách hàng</h2>
+                <button class="btn-primary" id="add-customer-btn"><i class="fas fa-plus"></i> Thêm khách hàng mới</button>
+            </div>
+            
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm khách hàng..." id="customer-search">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="customer-type-filter">
+                        <option value="all">Tất cả khách hàng</option>
+                        <option value="regular">Khách hàng thường xuyên</option>
+                        <option value="new">Khách hàng mới</option>
+                        <option value="vip">Khách hàng VIP</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Loại khách</th>
+                            <th>Tour đã đặt</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-table">
+                        <!-- Dữ liệu sẽ được load từ Firebase -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination">
+                <button class="prev" id="prev-page"><i class="fas fa-chevron-left"></i></button>
+                <button class="page active" id="current-page">1</button>
+                <button class="next" id="next-page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- Modal thêm/sửa khách hàng -->
+            <div class="modal" id="customer-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">Thêm khách hàng mới</h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form id="customer-form">
+                            <input type="hidden" id="customer-id">
+                            <div class="form-group">
+                                <label for="customer-name">Họ và tên</label>
+                                <input type="text" id="customer-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-email">Email</label>
+                                <input type="email" id="customer-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-phone">Số điện thoại</label>
+                                <input type="tel" id="customer-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-address">Địa chỉ</label>
+                                <input type="text" id="customer-address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-type">Loại khách</label>
+                                <select id="customer-type" required>
+                                    <option value="new">Khách hàng mới</option>
+                                    <option value="regular">Khách hàng thường xuyên</option>
+                                    <option value="vip">Khách hàng VIP</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Lưu</button>
+                                <button type="button" class="btn-secondary" id="cancel-btn">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            collection, 
+            getDocs, 
+            getDoc, 
+            doc, 
+            addDoc, 
+            updateDoc, 
+            deleteDoc, 
+            query, 
+            orderBy, 
+            where, 
+            limit, 
+            startAfter 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Biến toàn cục
+        let currentPage = 1;
+        const pageSize = 10;
+        let lastVisible = null;
+        let customersData = [];
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Đã đăng nhập:", user.email);
+                // Tải thông tin người dùng
+                loadUserProfile(user.uid);
+                // Tải dữ liệu khách hàng
+                loadCustomers();
+            } else {
+                // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Tải thông tin người dùng
+        async function loadUserProfile(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    document.getElementById('admin-name').textContent = userData.fullName || 'Admin';
+                    document.getElementById('admin-role').textContent = userData.role || 'Quản trị viên';
+                    if (userData.photoURL) {
+                        document.getElementById('admin-avatar').src = userData.photoURL;
+                    }
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải thông tin người dùng:", error);
+            }
+        }
+
+        // Tải danh sách khách hàng
+        async function loadCustomers() {
+            try {
+                let q;
+                
+                if (currentFilter === 'all') {
+                    q = query(collection(db, "customers"), orderBy("fullName"), limit(pageSize));
+                } else {
+                    q = query(
+                        collection(db, "customers"), 
+                        where("customerType", "==", currentFilter),
+                        orderBy("fullName"), 
+                        limit(pageSize)
+                    );
+                }
+                
+                if (lastVisible && currentPage > 1) {
+                    q = query(q, startAfter(lastVisible));
+                }
+                
+                const customersSnapshot = await getDocs(q);
+                
+                if (customersSnapshot.empty && currentPage > 1) {
+                    // Nếu không có dữ liệu và đang ở trang > 1, quay lại trang trước
+                    currentPage--;
+                    lastVisible = null;
+                    loadCustomers();
+                    return;
+                }
+                
+                // Lưu document cuối cùng cho phân trang
+                const lastDoc = customersSnapshot.docs[customersSnapshot.docs.length - 1];
+                if (lastDoc) {
+                    lastVisible = lastDoc;
+                }
+                
+                customersData = [];
+                customersSnapshot.forEach(doc => {
+                    customersData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                renderCustomersTable();
+                
+                // Cập nhật trạng thái nút phân trang
+                document.getElementById('current-page').textContent = currentPage;
+                document.getElementById('prev-page').disabled = currentPage === 1;
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách khách hàng:", error);
+            }
+        }
+
+        // Hiển thị danh sách khách hàng
+        function renderCustomersTable() {
+            const tableBody = document.getElementById('customers-table');
+            
+            if (customersData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Không có dữ liệu khách hàng</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            customersData.forEach((customer, index) => {
+                // Lọc theo từ khóa tìm kiếm nếu có
+                if (currentSearchTerm && !customerMatchesSearch(customer, currentSearchTerm)) {
+                    return;
+                }
+                
+                const customerType = getCustomerTypeLabel(customer.customerType);
+                const customerTypeClass = customer.customerType || 'new';
+                
+                html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${customer.fullName || 'N/A'}</td>
+                    <td>${customer.email || 'N/A'}</td>
+                    <td>${customer.phone || 'N/A'}</td>
+                    <td>${customer.address || 'N/A'}</td>
+                    <td><span class="customer-type ${customerTypeClass}">${customerType}</span></td>
+                    <td>${customer.tourCount || 0}</td>
+                    <td class="actions">
+                        <button class="btn-view" onclick="viewCustomer('${customer.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="btn-edit" onclick="editCustomer('${customer.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-delete" onclick="deleteCustomer('${customer.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                `;
+            });
+            
+            if (html === '') {
+                html = '<tr><td colspan="8" style="text-align: center;">Không tìm thấy khách hàng phù hợp</td></tr>';
+            }
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Kiểm tra khách hàng có khớp với từ khóa tìm kiếm
+        function customerMatchesSearch(customer, searchTerm) {
+            searchTerm = searchTerm.toLowerCase();
+            return (
+                (customer.fullName && customer.fullName.toLowerCase().includes(searchTerm)) ||
+                (customer.email && customer.email.toLowerCase().includes(searchTerm)) ||
+                (customer.phone && customer.phone.includes(searchTerm)) ||
+                (customer.address && customer.address.toLowerCase().includes(searchTerm))
+            );
+        }
+
+        // Lấy nhãn loại khách hàng
+        function getCustomerTypeLabel(type) {
+            switch(type) {
+                case 'vip': return 'VIP';
+                case 'regular': return 'Thường xuyên';
+                case 'new': return 'Mới';
+                default: return 'Mới';
+            }
+        }
+
+        // Xử lý sự kiện khi DOM đã tải xong
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý sự kiện tìm kiếm
+            const searchInput = document.getElementById('customer-search');
+            searchInput.addEventListener('input', function() {
+                currentSearchTerm = this.value.trim();
+                renderCustomersTable();
+            });
+            
+            // Xử lý sự kiện lọc theo loại khách hàng
+            const filterSelect = document.getElementById('customer-type-filter');
+            filterSelect.addEventListener('change', function() {
+                currentFilter = this.value;
+                currentPage = 1;
+                lastVisible = null;
+                loadCustomers();
+            });
+            
+            // Xử lý sự kiện phân trang
+            document.getElementById('prev-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    lastVisible = null; // Reset để tải lại từ đầu
+                    loadCustomers();
+                }
+            });
+            
+            document.getElementById('next-page').addEventListener('click', function() {
+                currentPage++;
+                loadCustomers();
+            });
+            
+            // Xử lý sự kiện thêm khách hàng mới
+            document.getElementById('add-customer-btn').addEventListener('click', function() {
+                openCustomerModal();
+            });
+            
+            // Xử lý sự kiện đóng modal
+            const closeBtn = document.querySelector('.close');
+            closeBtn.addEventListener('click', function() {
+                closeCustomerModal();
+            });
+            
+            document.getElementById('cancel-btn').addEventListener('click', function() {
+                closeCustomerModal();
+            });
+            
+            // Xử lý sự kiện submit form
+            document.getElementById('customer-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const customerId = document.getElementById('customer-id').value;
+                const customerData = {
+                    fullName: document.getElementById('customer-name').value,
+                    email: document.getElementById('customer-email').value,
+                    phone: document.getElementById('customer-phone').value,
+                    address: document.getElementById('customer-address').value,
+                    customerType: document.getElementById('customer-type').value,
+                    updatedAt: new Date()
+                };
+                
+                try {
+                    if (customerId) {
+                        // Cập nhật khách hàng
+                        await updateDoc(doc(db, "customers", customerId), customerData);
+                        alert('Cập nhật khách hàng thành công!');
+                    } else {
+                        // Thêm khách hàng mới
+                        customerData.createdAt = new Date();
+                        customerData.tourCount = 0;
+                        await addDoc(collection(db, "customers"), customerData);
+                        alert('Thêm khách hàng mới thành công!');
+                    }
+                    
+                    closeCustomerModal();
+                    loadCustomers();
+                } catch (error) {
+                    console.error("Lỗi khi lưu khách hàng:", error);
+                    alert('Đã xảy ra lỗi khi lưu thông tin khách hàng!');
+                }
+            });
+        });
+
+        // Mở modal thêm/sửa khách hàng
+        function openCustomerModal(customer = null) {
+            const modal = document.getElementById('customer-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const customerIdInput = document.getElementById('customer-id');
+            const customerNameInput = document.getElementById('customer-name');
+            const customerEmailInput = document.getElementById('customer-email');
+            const customerPhoneInput = document.getElementById('customer-phone');
+            const customerAddressInput = document.getElementById('customer-address');
+            const customerTypeSelect = document.getElementById('customer-type');
+            
+            if (customer) {
+                modalTitle.textContent = 'Chỉnh sửa khách hàng';
+                customerIdInput.value = customer.id;
+                customerNameInput.value = customer.fullName || '';
+                customerEmailInput.value = customer.email || '';
+                customerPhoneInput.value = customer.phone || '';
+                customerAddressInput.value = customer.address || '';
+                customerTypeSelect.value = customer.customerType || 'new';
+            } else {
+                modalTitle.textContent = 'Thêm khách hàng mới';
+                document.getElementById('customer-form').reset();
+                customerIdInput.value = '';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        // Đóng modal
+        function closeCustomerModal() {
+            document.getElementById('customer-modal').style.display = 'none';
+        }
+
+        // Đăng ký các hàm toàn cục để sử dụng trong HTML
+        window.viewCustomer = function(customerId) {
+            const customer = customersData.find(c => c.id === customerId);
+            if (customer) {
+                alert(`Thông tin chi tiết khách hàng: ${customer.fullName}`);
+                // Trong thực tế, bạn có thể hiển thị thông tin chi tiết trong một modal khác
+            }
+        };
+
+        window.editCustomer = function(customerId) {
+            const customer = customersData.find(c => c.id === customerId);
+            if (customer) {
+                openCustomerModal(customer);
+            }
+        };
+
+        window.deleteCustomer = async function(customerId) {
+            if (confirm('Bạn có chắc chắn muốn xóa khách hàng này không?')) {
+                try {
+                    await deleteDoc(doc(db, "customers", customerId));
+                    alert('Xóa khách hàng thành công!');
+                    loadCustomers();
+                } catch (error) {
+                    console.error("Lỗi khi xóa khách hàng:", error);
+                    alert('Đã xảy ra lỗi khi xóa khách hàng!');
+                }
+            }
+        };
+    </script>
+    <script src="script.js"></script>
+    <style>
+        /* Thêm CSS cho modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 5px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .close {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+    </style>
+</body>
+</html>

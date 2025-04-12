@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Tour Du lịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-plane"></i>
+            <h1>Hệ thống Quản lý Tour Du lịch</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="admin-profile">
+                <img src="admin-avatar.png" alt="Admin avatar" class="admin-avatar" id="admin-avatar">
+                <h3 id="admin-name">Admin</h3>
+                <p id="admin-role">Quản trị viên</p>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li class="active"><a href="quan-ly-tour.html"><i class="fas fa-map-marked-alt"></i> Quản lý Tour</a></li>
+                    <li><a href="khach-hang.html"><i class="fas fa-users"></i> Khách hàng</a></li>
+                    <li><a href="thong-ke.html"><i class="fas fa-chart-bar"></i> Thống kê</a></li>
+                    <li><a href="cai-dat.html"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-header">
+                <h2>Quản lý Tour Du lịch</h2>
+                <button class="btn-primary" id="add-tour-btn"><i class="fas fa-plus"></i> Thêm Tour mới</button>
+            </div>
+            
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm tour..." id="tour-search">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="tour-category-filter">
+                        <option value="all">Tất cả danh mục</option>
+                        <option value="domestic">Trong nước</option>
+                        <option value="international">Quốc tế</option>
+                        <option value="summer">Tour mùa hè</option>
+                        <option value="winter">Tour mùa đông</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên Tour</th>
+                            <th>Điểm đến</th>
+                            <th>Thời gian</th>
+                            <th>Giá</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tours-table">
+                        <!-- Dữ liệu sẽ được load từ Firebase -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination">
+                <button class="prev" id="prev-page"><i class="fas fa-chevron-left"></i></button>
+                <button class="page active" id="current-page">1</button>
+                <button class="next" id="next-page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- Modal thêm/sửa tour -->
+            <div class="modal" id="tour-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">Thêm Tour mới</h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form id="tour-form">
+                            <input type="hidden" id="tour-id">
+                            <div class="form-group">
+                                <label for="tour-name">Tên Tour</label>
+                                <input type="text" id="tour-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-destination">Điểm đến</label>
+                                <input type="text" id="tour-destination" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-duration">Thời gian (ngày)</label>
+                                <input type="number" id="tour-duration" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-price">Giá (VNĐ)</label>
+                                <input type="number" id="tour-price" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-capacity">Số lượng khách tối đa</label>
+                                <input type="number" id="tour-capacity" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-category">Danh mục</label>
+                                <select id="tour-category" required>
+                                    <option value="domestic">Trong nước</option>
+                                    <option value="international">Quốc tế</option>
+                                    <option value="summer">Tour mùa hè</option>
+                                    <option value="winter">Tour mùa đông</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-status">Trạng thái</label>
+                                <select id="tour-status" required>
+                                    <option value="active">Đang hoạt động</option>
+                                    <option value="pending">Chờ xử lý</option>
+                                    <option value="inactive">Tạm ngưng</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-image">Hình ảnh</label>
+                                <div class="file-upload">
+                                    <input type="file" id="tour-image" accept="image/*">
+                                    <button type="button" class="btn-secondary" id="upload-image-btn">Chọn file</button>
+                                    <span id="image-name">Chưa có file nào được chọn</span>
+                                </div>
+                                <div id="image-preview" style="margin-top: 10px; display: none;">
+                                    <img id="preview-img" src="" alt="Preview" style="max-width: 100%; max-height: 200px;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tour-description">Mô tả</label>
+                                <textarea id="tour-description" rows="4"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Lưu</button>
+                                <button type="button" class="btn-secondary" id="cancel-btn">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Firebase -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { auth, db, storage } from './firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            collection, 
+            getDocs, 
+            getDoc, 
+            doc, 
+            addDoc, 
+            updateDoc, 
+            deleteDoc, 
+            query, 
+            orderBy, 
+            where, 
+            limit, 
+            startAfter 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { 
+            ref, 
+            uploadBytes, 
+            getDownloadURL 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        // Biến toàn cục
+        let currentPage = 1;
+        const pageSize = 10;
+        let lastVisible = null;
+        let toursData = [];
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
+        let selectedImageFile = null;
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Đã đăng nhập:", user.email);
+                // Tải thông tin người dùng
+                loadUserProfile(user.uid);
+                // Tải dữ liệu tour
+                loadTours();
+            } else {
+                // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Tải thông tin người dùng
+        async function loadUserProfile(userId) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    document.getElementById('admin-name').textContent = userData.fullName || 'Admin';
+                    document.getElementById('admin-role').textContent = userData.role || 'Quản trị viên';
+                    if (userData.photoURL) {
+                        document.getElementById('admin-avatar').src = userData.photoURL;
+                    }
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải thông tin người dùng:", error);
+            }
+        }
+
+        // Tải danh sách tour
+        async function loadTours() {
+            try {
+                let q;
+                
+                if (currentFilter === 'all') {
+                    q = query(collection(db, "tours"), orderBy("name"), limit(pageSize));
+                } else {
+                    q = query(
+                        collection(db, "tours"), 
+                        where("category", "==", currentFilter),
+                        orderBy("name"), 
+                        limit(pageSize)
+                    );
+                }
+                
+                if (lastVisible && currentPage > 1) {
+                    q = query(q, startAfter(lastVisible));
+                }
+                
+                const toursSnapshot = await getDocs(q);
+                
+                if (toursSnapshot.empty && currentPage > 1) {
+                    // Nếu không có dữ liệu và đang ở trang > 1, quay lại trang trước
+                    currentPage--;
+                    lastVisible = null;
+                    loadTours();
+                    return;
+                }
+                
+                // Lưu document cuối cùng cho phân trang
+                const lastDoc = toursSnapshot.docs[toursSnapshot.docs.length - 1];
+                if (lastDoc) {
+                    lastVisible = lastDoc;
+                }
+                
+                toursData = [];
+                toursSnapshot.forEach(doc => {
+                    toursData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                renderToursTable();
+                
+                // Cập nhật trạng thái nút phân trang
+                document.getElementById('current-page').textContent = currentPage;
+                document.getElementById('prev-page').disabled = currentPage === 1;
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách tour:", error);
+            }
+        }
+
+        // Hiển thị danh sách tour
+        function renderToursTable() {
+            const tableBody = document.getElementById('tours-table');
+            
+            if (toursData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Không có dữ liệu tour</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            toursData.forEach((tour, index) => {
+                // Lọc theo từ khóa tìm kiếm nếu có
+                if (currentSearchTerm && !tourMatchesSearch(tour, currentSearchTerm)) {
+                    return;
+                }
+                
+                const statusClass = getTourStatusClass(tour.status);
+                const statusText = getTourStatusText(tour.status);
+                const formattedPrice = formatCurrency(tour.price);
+                
+                html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><img src="${tour.imageUrl || 'default-tour.jpg'}" alt="${tour.name}" class="tour-image"></td>
+                    <td>${tour.name || 'N/A'}</td>
+                    <td>${tour.destination || 'N/A'}</td>
+                    <td>${tour.duration || 'N/A'} ngày</td>
+                    <td>${formattedPrice}</td>
+                    <td><span class="status ${statusClass}">${statusText}</span></td>
+                    <td class="actions">
+                        <button class="btn-edit" onclick="editTour('${tour.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-delete" onclick="deleteTour('${tour.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                `;
+            });
+            
+            if (html === '') {
+                html = '<tr><td colspan="8" style="text-align: center;">Không tìm thấy tour phù hợp</td></tr>';
+            }
+            
+            tableBody.innerHTML = html;
+        }
+
+        // Kiểm tra tour có khớp với từ khóa tìm kiếm
+        function tourMatchesSearch(tour, searchTerm) {
+            searchTerm = searchTerm.toLowerCase();
+            return (
+                (tour.name && tour.name.toLowerCase().includes(searchTerm)) ||
+                (tour.destination && tour.destination.toLowerCase().includes(searchTerm))
+            );
+        }
+
+        // Lấy class cho trạng thái tour
+        function getTourStatusClass(status) {
+            switch(status) {
+                case 'active': return 'active';
+                case 'pending': return 'pending';
+                case 'inactive': return 'inactive';
+                default: return 'pending';
+            }
+        }
+
+        // Lấy text cho trạng thái tour
+        function getTourStatusText(status) {
+            switch(status) {
+                case 'active': return 'Đang hoạt động';
+                case 'pending': return 'Chờ xử lý';
+                case 'inactive': return 'Tạm ngưng';
+                default: return 'Chờ xử lý';
+            }
+        }
+
+        // Định dạng tiền tệ
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount || 0);
+        }
+
+        // Xử lý sự kiện khi DOM đã tải xong
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý sự kiện tìm kiếm
+            const searchInput = document.getElementById('tour-search');
+            searchInput.addEventListener('input', function() {
+                currentSearchTerm = this.value.trim();
+                renderToursTable();
+            });
+            
+            // Xử lý sự kiện lọc theo danh mục
+            const filterSelect = document.getElementById('tour-category-filter');
+            filterSelect.addEventListener('change', function() {
+                currentFilter = this.value;
+                currentPage = 1;
+                lastVisible = null;
+                loadTours();
+            });
+            
+            // Xử lý sự kiện phân trang
+            document.getElementById('prev-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    lastVisible = null; // Reset để tải lại từ đầu
+                    loadTours();
+                }
+            });
+            
+            document.getElementById('next-page').addEventListener('click', function() {
+                currentPage++;
+                loadTours();
+            });
+            
+            // Xử lý sự kiện thêm tour mới
+            document.getElementById('add-tour-btn').addEventListener('click', function() {
+                openTourModal();
+            });
+            
+            // Xử lý sự kiện đóng modal
+            const closeBtn = document.querySelector('.close');
+            closeBtn.addEventListener('click', function() {
+                closeTourModal();
+            });
+            
+            document.getElementById('cancel-btn').addEventListener('click', function() {
+                closeTourModal();
+            });
+            
+            // Xử lý sự kiện chọn file ảnh
+            const uploadImageBtn = document.getElementById('upload-image-btn');
+            const tourImageInput = document.getElementById('tour-image');
+            
+            uploadImageBtn.addEventListener('click', function() {
+                tourImageInput.click();
+            });
+            
+            tourImageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    selectedImageFile = this.files[0];
+                    document.getElementById('image-name').textContent = selectedImageFile.name;
+                    
+                    // Hiển thị preview ảnh
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('preview-img').src = e.target.result;
+                        document.getElementById('image-preview').style.display = 'block';
+                    };
+                    reader.readAsDataURL(selectedImageFile);
+                }
+            });
+            
+            // Xử lý sự kiện submit form
+            document.getElementById('tour-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const tourId = document.getElementById('tour-id').value;
+                const tourData = {
+                    name: document.getElementById('tour-name').value,
+                    destination: document.getElementById('tour-destination').value,
+                    duration: parseInt(document.getElementById('tour-duration').value),
+                    price: parseInt(document.getElementById('tour-price').value),
+                    capacity: parseInt(document.getElementById('tour-capacity').value),
+                    category: document.getElementById('tour-category').value,
+                    status: document.getElementById('tour-status').value,
+                    description: document.getElementById('tour-description').value,
+                    updatedAt: new Date()
+                };
+                
+                try {
+                    // Upload ảnh nếu có
+                    if (selectedImageFile) {
+                        const storageRef = ref(storage, `tours/${Date.now()}_${selectedImageFile.name}`);
+                        await uploadBytes(storageRef, selectedImageFile);
+                        const imageUrl = await getDownloadURL(storageRef);
+                        tourData.imageUrl = imageUrl;
+                    }
+                    
+                    if (tourId) {
+                        // Cập nhật tour
+                        await updateDoc(doc(db, "tours", tourId), tourData);
+                        alert('Cập nhật tour thành công!');
+                    } else {
+                        // Thêm tour mới
+                        tourData.createdAt = new Date();
+                        tourData.soldCount = 0;
+                        await addDoc(collection(db, "tours"), tourData);
+                        alert('Thêm tour mới thành công!');
+                    }
+                    
+                    closeTourModal();
+                    loadTours();
+                } catch (error) {
+                    console.error("Lỗi khi lưu tour:", error);
+                    alert('Đã xảy ra lỗi khi lưu thông tin tour!');
+                }
+            });
+        });
+
+        // Mở modal thêm/sửa tour
+        function openTourModal(tour = null) {
+            const modal = document.getElementById('tour-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const tourIdInput = document.getElementById('tour-id');
+            const tourNameInput = document.getElementById('tour-name');
+            const tourDestinationInput = document.getElementById('tour-destination');
+            const tourDurationInput = document.getElementById('tour-duration');
+            const tourPriceInput = document.getElementById('tour-price');
+            const tourCapacityInput = document.getElementById('tour-capacity');
+            const tourCategorySelect = document.getElementById('tour-category');
+            const tourStatusSelect = document.getElementById('tour-status');
+            const tourDescriptionInput = document.getElementById('tour-description');
+            const imagePreview = document.getElementById('image-preview');
+            const previewImg = document.getElementById('preview-img');
+            
+            // Reset selected image
+            selectedImageFile = null;
+            document.getElementById('image-name').textContent = 'Chưa có file nào được chọn';
+            
+            if (tour) {
+                modalTitle.textContent = 'Chỉnh sửa tour';
+                tourIdInput.value = tour.id;
+                tourNameInput.value = tour.name || '';
+                tourDestinationInput.value = tour.destination || '';
+                tourDurationInput.value = tour.duration || 1;
+                tourPriceInput.value = tour.price || 0;
+                tourCapacityInput.value = tour.capacity || 1;
+                tourCategorySelect.value = tour.category || 'domestic';
+                tourStatusSelect.value = tour.status || 'pending';
+                tourDescriptionInput.value = tour.description || '';
+                
+                // Hiển thị ảnh nếu có
+                if (tour.imageUrl) {
+                    previewImg.src = tour.imageUrl;
+                    imagePreview.style.display = 'block';
+                } else {
+                    imagePreview.style.display = 'none';
+                }
+            } else {
+                modalTitle.textContent = 'Thêm tour mới';
+                document.getElementById('tour-form').reset();
+                tourIdInput.value = '';
+                imagePreview.style.display = 'none';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        // Đóng modal
+        function closeTourModal() {
+            document.getElementById('tour-modal').style.display = 'none';
+        }
+
+        // Đăng ký các hàm toàn cục để sử dụng trong HTML
+        window.editTour = function(tourId) {
+            const tour = toursData.find(t => t.id === tourId);
+            if (tour) {
+                openTourModal(tour);
+            }
+        };
+
+        window.deleteTour = async function(tourId) {
+            if (confirm('Bạn có chắc chắn muốn xóa tour này không?')) {
+                try {
+                    await deleteDoc(doc(db, "tours", tourId));
+                    alert('Xóa tour thành công!');
+                    loadTours();
+                } catch (error) {
+                    console.error("Lỗi khi xóa tour:", error);
+                    alert('Đã xảy ra lỗi khi xóa tour!');
+                }
+            }
+        };
+    </script>
+    <script src="script.js"></script>
+    <style>
+        /* Thêm CSS cho modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 5px;
+            width: 600px;
+            max-width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .close {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .file-upload {
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        
+        .file-upload button {
+            margin-right: 10px;
+        }
+        
+        #image-name {
+            font-size: 12px;
+            color: #757575;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            resize: vertical;
+        }
+    </style>
+</body>
+</html>
