@@ -1,96 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/main"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/freepik__the_style_is_modern_and_it_is_a_detailed_illustrat__85337">
+    tools:context=".view.MainActivity">
 
-    <!-- Status Bar Placeholder -->
-    <TextView
-        android:id="@+id/statusBarPlaceholder"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
+
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:layout_alignParentTop="true" />
+        android:layout_height="60dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:cnb_iconColor="@color/blue"
+        app:cnb_radius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:cnb_menuResource="@menu/bottom_nav_menu" />
 
-    <!-- Logo Traveler -->
-    <TextView
-        android:id="@+id/tvTraveler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="Traveler"
-        android:textColor="#FFFFFF"
-        android:textSize="48sp"
-        android:fontFamily="@font/sora"
-        android:textStyle="bold" />
-
-    <!-- Icon máy bay bên cạnh logo -->
-    <ImageView
-        android:id="@+id/ivPaperPlane"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignBottom="@id/tvTraveler"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="8dp"
-        android:layout_toEndOf="@id/tvTraveler"
-        android:rotation="10"
-        app:tint="#FFFFFF"
-        android:src="@drawable/mail" />
-
-    <!-- Slogan - Đặt ở vị trí thấp hơn, gần mây -->
-    <TextView
-        android:id="@+id/tvSlogan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btnCreateAccount"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:fontFamily="@font/sriregular"
-        android:text="Explore Beyond\nYour Imagination"
-        android:textAlignment="center"
-        android:textColor="#1A2A82"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <!-- Nút Create Account - Màu tím -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCreateAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btnLogin"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="10dp"
-        app:backgroundTint="#0000FF"
-        android:fontFamily="@font/robotomono"
-        android:padding="12dp"
-        android:text="Create Account"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:cornerRadius="4dp" />
-
-    <!-- Nút Log In - Cũng màu tím -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
-        app:backgroundTint="#FFFFFF"
-        android:fontFamily="@font/robotomono"
-        android:padding="12dp"
-        android:text="Log In"
-        android:textColor="#0000FF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:cornerRadius="4dp"
-        app:strokeColor="#DDDDDD"
-        app:strokeWidth="1dp" />
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

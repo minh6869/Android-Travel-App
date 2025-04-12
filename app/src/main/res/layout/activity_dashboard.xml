@@ -692,32 +692,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Decorative Elements -->
-            <!-- Chinese cartoon character (left) -->
-<!--            <ImageView-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:layout_gravity="left|top"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:src="@drawable/china_character" />-->
-
-            <!-- Map of China decoration (right) -->
-<!--            <ImageView-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="100dp"-->
-<!--                android:layout_gravity="right|top"-->
-<!--                android:layout_marginTop="120dp"-->
-<!--                android:src="@drawable/china_map"-->
-<!--                android:alpha="0.7" />-->
-
-            <!-- Korean cartoon character decoration (left bottom) -->
-<!--            <ImageView-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:layout_gravity="left|bottom"-->
-<!--                android:layout_marginBottom="80dp"-->
-<!--                android:src="@drawable/korea_character" />-->
-
             <!-- Main content -->
             <LinearLayout
                 android:layout_width="match_parent"
