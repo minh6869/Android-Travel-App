@@ -14,14 +14,14 @@
             android:id="@+id/headerCard"
             android:layout_width="match_parent"
             android:layout_height="280dp"
-            app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
 
             <View
                 android:id="@+id/blueHeader"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/dashboard_bg" />
+                android:background="@drawable/bottom_rounded_bg"/>
+
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -92,10 +92,10 @@
                     android:layout_height="36dp"
                     android:layout_marginStart="12dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Notifications"
+                    android:contentDescription="@drawable/notification_bell"
                     android:padding="2dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/notification"
+                    android:src="@drawable/notification_bell"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true" />
@@ -172,7 +172,8 @@
                     android:text="Sign In"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:strokeColor="@android:color/background_light" />
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -406,28 +407,5 @@
                 android:background="#E8F1C5" />
 
         </LinearLayout>
-
-
-
-
-
-
-
-
     </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </ScrollView>

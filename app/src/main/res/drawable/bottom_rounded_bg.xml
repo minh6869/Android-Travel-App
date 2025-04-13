@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Your background image -->
+    <item>
+        <bitmap
+            android:src="@drawable/dashboard_bg"
+            android:gravity="fill"
+            android:scaleType="fitXY"/>
+    </item>
+
+    <!-- Optional: Add a mask with rounded corners if needed -->
+    <item>
+        <shape>
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="16dp"
+                android:bottomRightRadius="16dp" />
+        </shape>
+    </item>
+</layer-list>

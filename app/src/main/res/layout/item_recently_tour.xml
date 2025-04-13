@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="180dp"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
@@ -17,7 +16,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="140dp">
 
             <ImageView
                 android:id="@+id/imgTour"
@@ -26,11 +25,12 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/night_e1708573119375" />
 
+            <!-- Location Badge - Fixed Position -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|left"
-                android:layout_margin="8dp"
+                android:layout_gravity="top|start"
+                android:layout_marginTop="6dp"
                 android:background="#F57777"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -55,17 +55,21 @@
                     android:textSize="10sp" />
             </LinearLayout>
 
+            <!-- Bookmark Button - Fixed Position -->
             <ImageButton
                 android:id="@+id/btnBookmark"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_gravity="top|right"
-                android:layout_margin="8dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="2dp"
+                android:scaleType="centerInside"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="bookmark"
                 android:elevation="6dp"
-                android:src="@drawable/bookmark"
-                app:tint="#FFFEFE" />
+                android:src="@drawable/save_instagram"
+                app:tint="#FFFFFF" />
         </FrameLayout>
 
         <LinearLayout
@@ -102,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:text="9.4/10 (16315)"
+                    android:text="4.7/5 (16315)"
                     android:fontFamily="@font/sora"
                     android:textColor="#4285F4"
                     android:textSize="12sp" />
