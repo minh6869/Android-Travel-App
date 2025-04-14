@@ -25,242 +25,174 @@
                 android:layout_height="24dp"
                 android:src="@drawable/arrow"
                 android:layout_centerVertical="true"
-                android:tint="#FFFFFF" />
+                app:tint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/sora"
                 android:text="Fill In Details"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginStart="40dp" />
+                android:textStyle="bold" />
         </RelativeLayout>
+    </LinearLayout>
 
-        <!-- Progress Indicator -->
+    <!-- Booking Info Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:paddingVertical="16dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Book Step - Active -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/circle_active"
-                    android:text="1"
-                    android:textColor="#00BCD4"
-                    android:gravity="center"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Book"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="24dp"
-                android:layout_height="1dp"
-                android:background="#FFFFFF"
-                android:layout_marginHorizontal="8dp" />
-
-            <!-- Pay Step - Inactive -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/circle_inactive"
-                    android:text="2"
-                    android:textColor="#FFFFFF"
-                    android:gravity="center"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pay"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Booking Info Card - Now inside the turquoise section -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp">
-
+            <!-- Warning Message -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
 
-                <!-- Warning Message -->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/checklist" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/sora"
+                    android:text="Double check your booking before paying"
+                    android:textColor="#F44336"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Tour Info -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/bana_hill"
+                    android:scaleType="centerCrop" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/checklist" />
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Double check your booking before paying"
-                        android:textColor="#F44336"
-                        android:textSize="14sp"
-                        android:layout_marginStart="8dp" />
+                        android:ellipsize="end"
+                        android:fontFamily="@font/sora"
+                        android:maxLines="1"
+                        android:text="Ba Na Hills ( Vietnam Gold..."
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sora"
+                        android:text="Adult : 1"
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Booking Details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+
+                <!-- Valid Date -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/calendar__2_"
+                        app:tint="#4CAF50" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/sora"
+                        android:text="Valid on 18 Mar 2025"
+                        android:textColor="#4CAF50"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Tour Info -->
+                <!-- Reschedule Not Available -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="4dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/no_calendar"
+                        app:tint="#757575" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/sora"
+                        android:text="Reschedule Not Available"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Cannot Be Refunded -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/bana_hill"
-                        android:scaleType="centerCrop" />
+                        android:layout_width="11dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/close"
+                        app:tint="#757575" />
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="12dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Ba Na Hills ( Vietnam Gold..."
-                            android:textColor="#000000"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:ellipsize="end"
-                            android:maxLines="1" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Private Tour for 1 - 4 Participan..."
-                            android:textColor="#666666"
-                            android:textSize="14sp"
-                            android:ellipsize="end"
-                            android:maxLines="1" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Adult : 1"
-                            android:textColor="#666666"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Booking Details -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp">
-
-                    <!-- Valid Date -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="4dp">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/calendar__2_"
-                            android:tint="#4CAF50" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Valid on 18 Mar 2025"
-                            android:textColor="#4CAF50"
-                            android:textSize="14sp"
-                            android:layout_marginStart="8dp" />
-                    </LinearLayout>
-
-                    <!-- Reschedule Not Available -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="4dp">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/no_calendar"
-                            android:tint="#757575" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Reschedule Not Available"
-                            android:textColor="#757575"
-                            android:textSize="14sp"
-                            android:layout_marginStart="8dp" />
-                    </LinearLayout>
-
-                    <!-- Cannot Be Refunded -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/close"
-                            android:tint="#757575" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Cannot Be Refunded"
-                            android:textColor="#757575"
-                            android:textSize="14sp"
-                            android:layout_marginStart="8dp" />
-                    </LinearLayout>
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/sora"
+                        android:text="Cannot Be Refunded"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <!-- Contact Details Section -->
     <LinearLayout
@@ -274,6 +206,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sora"
             android:text="Contact Details"
             android:textColor="#000000"
             android:textSize="16sp"
@@ -282,10 +215,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/sora"
             android:text="We will send all e-tickets from this booking to this contact"
             android:textColor="#757575"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            android:textSize="14sp" />
 
         <!-- Fill in Contact Details Button -->
         <androidx.cardview.widget.CardView
@@ -306,8 +240,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/mail"
-                    android:tint="#757575" />
+                    android:src="@drawable/mail__1_"
+                    app:tint="#757575" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -319,6 +253,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/sora"
                         android:text="Fill in Contact Details"
                         android:textColor="#000000"
                         android:textSize="16sp" />
@@ -327,7 +262,7 @@
                         android:layout_width="8dp"
                         android:layout_height="8dp"
                         android:src="@drawable/star__1_"
-                        android:tint="#FF0000"
+                        app:tint="#FF0000"
                         android:layout_marginStart="2dp" />
                 </LinearLayout>
 
@@ -335,7 +270,8 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/right_arrow"
-                    android:tint="#4285F4"/>
+                    android:rotation="90"
+                    app:tint="#4285F4"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
@@ -358,6 +294,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sora"
             android:text="Location Details"
             android:textColor="#000000"
             android:textSize="16sp"
@@ -376,23 +313,24 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/maps_and_flags__1_"
-                android:tint="#4285F4" />
+                app:tint="#4285F4" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/sora"
                 android:text="Location Details"
                 android:textColor="#000000"
-                android:textSize="16sp"
-                android:layout_marginStart="12dp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/right_arrow"
                 android:rotation="90"
-                android:tint="#4285F4" />
+                app:tint="#4285F4" />
         </LinearLayout>
     </LinearLayout>
 
@@ -402,7 +340,7 @@
         android:layout_height="1dp"
         android:background="#E0E0E0" />
 
-    <!-- Price Details Section - UPDATED to match Location Details -->
+    <!-- Price Details Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -414,12 +352,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sora"
             android:text="Price Details"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Price Details Button - Styled like Location Details -->
+        <!-- Price Details Button -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -433,27 +372,27 @@
                 android:layout_height="24dp"
                 android:src="@drawable/right_arrow"
                 android:rotation="90"
-                android:tint="#4285F4" />
+                app:tint="#4285F4" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/sora"
                 android:text="Price Details"
                 android:textColor="#000000"
-                android:textSize="16sp"
-                android:layout_marginStart="12dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/sora"
                 android:text="775.000 VND"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="8dp" />
-
-
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 

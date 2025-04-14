@@ -28,8 +28,8 @@
 
                 <ImageView
                     android:id="@+id/btnBack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/arrow_right"
@@ -82,7 +82,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:padding="4dp"
-                        android:src="@drawable/user"
+                        android:src="@drawable/user__1_"
                         android:background="#FFFFFF"
                         android:scaleType="centerCrop"
                         app:shapeAppearanceOverlay="@style/CircleImageView"

@@ -17,9 +17,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sora"
             android:text="Contact Details"
             android:textColor="#FFFFFF"
-            android:fontFamily="@font/sora"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:src="@drawable/ic_close"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:tint="#FFFFFF" />
+            app:tint="#FFFFFF" />
     </RelativeLayout>
 
     <!-- Contact Form -->
@@ -56,8 +56,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Full Name "
                     android:fontFamily="@font/sora"
+                    android:text="Full Name "
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
@@ -65,7 +65,7 @@
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:src="@drawable/star__1_"
-                    android:tint="#FF0000"
+                    app:tint="#FF0000"
                     android:layout_marginStart="2dp" />
             </LinearLayout>
 
@@ -73,11 +73,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="(with out title and punctuation)"
                 android:fontFamily="@font/sora"
+                android:hint="(with out title and punctuation)"
+                android:paddingVertical="8dp"
                 android:textColorHint="#AAAAAA"
-                android:textSize="14sp"
-                android:paddingVertical="8dp" />
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -101,8 +101,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile Number "
                     android:fontFamily="@font/sora"
+                    android:text="Mobile Number "
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
@@ -110,7 +110,7 @@
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:src="@drawable/star__1_"
-                    android:tint="#FF0000"
+                    app:tint="#FF0000"
                     android:layout_marginStart="2dp" />
             </LinearLayout>
 
@@ -142,8 +142,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email "
                     android:fontFamily="@font/sora"
+                    android:text="Email "
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
@@ -151,7 +151,7 @@
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:src="@drawable/star__1_"
-                    android:tint="#FF0000"
+                    app:tint="#FF0000"
                     android:layout_marginStart="2dp" />
             </LinearLayout>
 
@@ -159,11 +159,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:fontFamily="@font/sora"
                 android:hint="e.g.email@example.com"
-                android:textColorHint="#AAAAAA"
-                android:textSize="14sp"
                 android:inputType="textEmailAddress"
-                android:paddingVertical="8dp" />
+                android:paddingVertical="8dp"
+                android:textColorHint="#AAAAAA"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -172,7 +173,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Rest of your layout remains the same -->
     <!-- Information Note -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -201,17 +201,17 @@
                     android:layout_height="18dp"
                     android:layout_gravity="center"
                     android:src="@drawable/info"
-                    android:tint="#2196F3" />
+                    app:tint="#2196F3" />
             </FrameLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="We will send your booking confirmations to the above contact details. Make sure your emails and mobile number are active to receive the confirmations and manage your booking."
+                android:layout_marginStart="12dp"
                 android:fontFamily="@font/sora"
+                android:text="We will send your booking confirmations to the above contact details. Make sure your emails and mobile number are active to receive the confirmations and manage your booking."
                 android:textColor="#333333"
-                android:textSize="14sp"
-                android:layout_marginStart="12dp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

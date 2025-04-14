@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F5F5F5">
+
+        <!-- Tour Image -->
+        <ImageView
+            android:id="@+id/ivTourImage"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/bana_hill"
+            android:contentDescription="Tour image" />
+
+        <!-- Tour Details -->
+        <LinearLayout
+            android:id="@+id/tourInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/ivTourImage"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Tour Name -->
+            <TextView
+                android:id="@+id/tvTourName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ba Na Hills (Vietnam Gold...)"
+                android:textColor="#000000"
+                android:fontFamily="@font/sora"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end" />
+
+            <!-- Location -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/maps_and_flags__3_"
+                    app:tint="#757575" />
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hoa Vang District"
+                    android:textColor="#757575"
+                    android:fontFamily="@font/sora"
+                    android:textSize="12sp"
+                    android:layout_marginStart="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Bottom Row with Price and Select Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tourInfoLayout"
+            android:layout_toEndOf="@id/ivTourImage"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp"
+            android:gravity="center_vertical">
+
+            <!-- Price -->
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="775.000 VND"
+                android:textColor="#F57777"
+                android:fontFamily="@font/sora"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Select Button -->
+            <Button
+                android:id="@+id/btnSelect"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Select"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/sora"
+                android:textSize="12sp"
+                android:backgroundTint="@color/blue"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

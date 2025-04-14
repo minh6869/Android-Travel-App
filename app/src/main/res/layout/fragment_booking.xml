@@ -1,36 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    xmlns:tool="http://schemas.android.com/tools"
+    android:background="#FFFFFF"
+    tool:context=".view.fragment.HomeFragment">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/headerCard"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp">
-
-        <View
-            android:id="@+id/blueHeader"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/headerCard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/user" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="280dp"
+            app:cardElevation="0dp">
 
+            <View
+                android:id="@+id/blueHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bottom_rounded_bg"/>
 
+        </com.google.android.material.card.MaterialCardView>
 
+        <!-- Status Bar -->
+        <LinearLayout
+            android:id="@+id/statusBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
+        <!-- Welcome Section -->
+        <LinearLayout
+            android:id="@+id/welcomeSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/statusBar"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome"
+                android:fontFamily="@font/sora"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
+                <!-- Đây là TextView để hiển thị tên người dùng -->
+                <TextView
+                    android:id="@+id/tvWelcomeUser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="User Name"
+                    android:fontFamily="@font/sora"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
+                <ImageButton
+                    android:id="@+id/btnProfile"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="User profile"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/user"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true" />
 
+                <ImageButton
+                    android:id="@+id/btnNotifications"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@drawable/notification_bell"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/notification_bell"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+        </LinearLayout>
 
+        <!-- Search Bar -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeSection"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/search__1_" />
 
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:background="@null"
+                    android:hint="search for your tour"
+                    android:fontFamily="@font/sora"
+                    android:textColorHint="#80100A0A"
+                    android:textColor="#0B0303"
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-</RelativeLayout>
+        <!-- Pending Bookings Section -->
+        <LinearLayout
+            android:id="@+id/pendingSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchBar"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pending"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/sora"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSeeAllPending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See all"
+                    android:fontFamily="@font/sora"
+                    android:textColor="#1E88E5"
+                    android:textSize="14sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPendingBookings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </LinearLayout>
+
+        <!-- Completed Bookings Section -->
+        <LinearLayout
+            android:id="@+id/completedSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pendingSection"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Completed"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/sora"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSeeAllCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See all"
+                    android:fontFamily="@font/sora"
+                    android:textColor="#1E88E5"
+                    android:textSize="14sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCompletedBookings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </LinearLayout>
+
+        <!-- Empty space at the bottom for better scrolling -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@id/completedSection" />
+    </RelativeLayout>
+</ScrollView>

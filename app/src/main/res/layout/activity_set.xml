@@ -19,16 +19,17 @@
             android:layout_height="24dp"
             android:src="@drawable/arrow"
             android:layout_centerVertical="true"
-            android:tint="#FFFFFF" />
+            app:tint="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:fontFamily="@font/sora"
             android:text="Set date and visitors"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="40dp" />
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <!-- Tour Info Card -->
@@ -61,32 +62,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ba Na Hills ( Vietnam Gold..."
+                    android:ellipsize="end"
                     android:fontFamily="@font/sora"
+                    android:maxLines="1"
+                    android:text="Ba Na Hills ( Vietnam Gold..."
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Private Tour for 1 - 4 Participan..."
                     android:fontFamily="@font/sora"
+                    android:text="Adult : 1"
                     android:textColor="#666666"
                     android:textSize="14sp"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Adult : 1"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/sora"
-                    android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -101,12 +92,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/sora"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
         android:text="Package options"
         android:textColor="#000000"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp" />
+        android:textStyle="bold" />
 
     <!-- Date Selection -->
     <HorizontalScrollView
@@ -152,6 +144,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="Sat"
                     android:textColor="#000000"
                     android:textSize="14sp" />
@@ -159,6 +152,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="15 March"
                     android:textColor="#000000"
                     android:textSize="14sp"
@@ -177,6 +171,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="Sun"
                     android:textColor="#000000"
                     android:textSize="14sp" />
@@ -184,6 +179,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="16 March"
                     android:textColor="#000000"
                     android:textSize="14sp"
@@ -202,6 +198,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="Mon"
                     android:textColor="#000000"
                     android:textSize="14sp" />
@@ -209,6 +206,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="17 March"
                     android:textColor="#000000"
                     android:textSize="14sp"
@@ -227,6 +225,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="Tue"
                     android:textColor="#1E88E5"
                     android:textSize="14sp" />
@@ -234,6 +233,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
                     android:text="18 March"
                     android:textColor="#1E88E5"
                     android:textSize="14sp"
@@ -246,177 +246,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Minimum booking: 1 visitor (adults)"
-        android:textColor="#3F51B5"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:background="#E3F2FD"
-        android:padding="12dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp" />
-
-    <!-- Adult Price 1 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ADULT"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="775.000 VND"
-                    android:textColor="#F44336"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(height of 140 cm and over required)"
-                    android:textColor="#757575"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:text="-"
-                    android:textColor="#757575"
-                    android:textSize="20sp"
-                    android:backgroundTint="#E9E9E9"
-                    app:cornerRadius="4dp"
-                    android:gravity="center" />
-
-                <TextView
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:layout_marginHorizontal="8dp" />
-
-                <TextView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:backgroundTint="#F2F2F2"
-                    android:text="+"
-                    android:textColor="#1E40AF"
-                    android:textSize="20sp"
-                    app:cornerRadius="4dp"
-                    android:gravity="center" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Child Price Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CHILD"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="575.000 VND"
-                    android:textColor="#F44336"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(height of 100-139 cm and over required)"
-                    android:textColor="#757575"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:backgroundTint="#E9E9E9"
-                    app:cornerRadius="4dp"
-                    android:text="-"
-                    android:textColor="#757575"
-                    android:textSize="20sp"
-                    android:gravity="center" />
-
-                <TextView
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:layout_marginHorizontal="8dp" />
-
-                <TextView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:backgroundTint="#F2F2F2"
-                    android:text="+"
-                    android:textColor="#1E40AF"
-                    android:textSize="20sp"
-                    android:gravity="center" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_marginVertical="16dp"
+        android:background="#E3F2FD"
+        android:fontFamily="@font/sora"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Minimum booking: 1 visitor"
+        android:textColor="#3F51B5"
+        android:textSize="14sp" />
 
     <!-- Spacer -->
     <View
@@ -441,6 +279,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/sora"
                 android:text="Total price"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -448,6 +287,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/sora"
                 android:text="775.000 VND"
                 android:textColor="#F44336"
                 android:textSize="18sp"
@@ -456,6 +296,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/sora"
                 android:text="Includes taxes and fees"
                 android:textColor="#757575"
                 android:textSize="12sp" />

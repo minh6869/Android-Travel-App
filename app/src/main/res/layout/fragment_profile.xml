@@ -49,7 +49,7 @@
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:padding="4dp"
-                    android:src="@drawable/user"
+                    android:src="@drawable/user__1_"
                     android:background="#FFFFFF"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/CircleImageView" />
@@ -121,10 +121,10 @@
                             android:textSize="16sp" />
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/arrow_right"
-                            app:tint="#757575" />
+                            app:tint="#000000" />
                     </LinearLayout>
 
                     <View
@@ -161,10 +161,10 @@
                             android:textSize="16sp" />
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/arrow_right"
-                            app:tint="#757575" />
+                            app:tint="#000000" />
                     </LinearLayout>
 
                     <View
@@ -201,10 +201,10 @@
                             android:textSize="16sp" />
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/arrow_right"
-                            app:tint="#757575" />
+                            app:tint="#000000" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -266,10 +266,10 @@
                             android:textSize="16sp" />
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/arrow_right"
-                            app:tint="#757575" />
+                            app:tint="#000000" />
                     </LinearLayout>
 
                     <View
