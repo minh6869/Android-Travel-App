@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                             // Chuyển đến màn hình Dashboard
-                            Intent intent = new Intent(LoginActivity.this, DashboardActivityTest.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish(); // Đóng activity đăng nhập

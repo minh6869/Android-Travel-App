@@ -1,6 +1,10 @@
 package com.example.travelerapp.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +18,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.travelerapp.R;
 import com.example.travelerapp.model.Tour;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class TourAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "TourAdapter";
     private static final int VIEW_TYPE_RECENTLY = 0;
     private static final int VIEW_TYPE_MAIN = 1;
 
     private Context context;
     private List<Tour> tourList;
     private OnTourClickListener listener;
+
+    // Simple image cache
+    private Map<String, Bitmap> imageCache = new HashMap<>();
 
     public interface OnTourClickListener {
         void onTourClick(Tour tour);
@@ -63,52 +77,125 @@ public class TourAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    // In TourAdapter.java, update the bindRecentlyTourViewHolder method:
+
     private void bindRecentlyTourViewHolder(RecentlyTourViewHolder holder, Tour tour, int position) {
-        holder.nameTextView.setText(tour.getName());
-        holder.locationTextView.setText(tour.getLocation());
-        holder.ratingTextView.setText(tour.getRating() + " (" + tour.getReviewCount() + ")");
-        holder.priceTextView.setText(tour.getPrice());
-        holder.imageView.setImageResource(tour.getImageResourceId());
+        // Set text data with null checks
+        holder.nameTextView.setText(tour.getTitle() != null ? tour.getTitle() : "");
+        holder.locationTextView.setText(tour.getLocation() != null ? tour.getLocation() : "");
 
-        if (tour.isBookmarked()) {
-            holder.bookmarkButton.setImageResource(R.drawable.bookmarked);
-        } else {
-            holder.bookmarkButton.setImageResource(R.drawable.bookmark);
-        }
+        // Format rating with review count
+        holder.ratingTextView.setText(tour.getRatingDisplay());
 
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onTourClick(tour);
-            }
-        });
+        // Set price
+        holder.priceTextView.setText(tour.getPrice() != null ? tour.getPrice() : "Contact for price");
 
-        holder.bookmarkButton.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onBookmarkClick(tour, position);
-            }
-        });
+        // Load image
+        loadTourImage(holder.imageView, tour);
+
+        // Set bookmark status
+        updateBookmarkIcon(holder.bookmarkButton, tour.isBookmarked());
+
+        // Set click listeners
+        setupClickListeners(holder.itemView, holder.bookmarkButton, tour, position);
     }
 
     private void bindMainTourViewHolder(MainTourViewHolder holder, Tour tour, int position) {
-        holder.nameTextView.setText(tour.getName());
+        // Set text data
+        holder.nameTextView.setText(tour.getTitle() != null ? tour.getTitle() : "");
         holder.locationTextView.setText(tour.getLocation());
-        holder.ratingTextView.setText(tour.getRating());
-        holder.priceTextView.setText(tour.getPrice());
-        holder.imageView.setImageResource(tour.getImageResourceId());
 
-        if (tour.isBookmarked()) {
-            holder.bookmarkButton.setImageResource(R.drawable.bookmarked);
+        // Format rating
+        String ratingText = String.format(Locale.getDefault(), "%.1f/10", tour.getRating());
+        holder.ratingTextView.setText(ratingText);
+
+        // Set price
+        holder.priceTextView.setText(tour.getPrice() != null ? tour.getPrice() : "");
+
+        // Load image
+        loadTourImage(holder.imageView, tour);
+
+        // Set bookmark status
+        updateBookmarkIcon(holder.bookmarkButton, tour.isBookmarked());
+
+        // Set click listeners
+        setupClickListeners(holder.itemView, holder.bookmarkButton, tour, position);
+    }
+
+    private void loadTourImage(ImageView imageView, Tour tour) {
+        // First set a placeholder or default image
+        imageView.setImageResource(R.drawable.ic_launcher_background); // Use a placeholder resource
+
+        // Check if we have a URL first
+        if (tour.getTourImageUrl() != null && !tour.getTourImageUrl().isEmpty()) {
+            // Check if image is in cache
+            if (imageCache.containsKey(tour.getTourImageUrl())) {
+                imageView.setImageBitmap(imageCache.get(tour.getTourImageUrl()));
+                return;
+            }
+
+            // Load image in background
+            new ImageLoadTask(imageView, tour.getTourImageUrl()).execute();
         } else {
-            holder.bookmarkButton.setImageResource(R.drawable.bookmark);
+            // Fall back to resource ID if no URL
+            int resourceId = tour.getImageResourceId();
+            if (resourceId != 0) {
+                imageView.setImageResource(resourceId);
+            }
+        }
+    }
+
+    // AsyncTask for loading images without using a library
+    private class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+        private ImageView imageView;
+        private String url;
+
+        public ImageLoadTask(ImageView imageView, String url) {
+            this.imageView = imageView;
+            this.url = url;
         }
 
-        holder.itemView.setOnClickListener(v -> {
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            try {
+                URL urlConnection = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading image: " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if (result != null) {
+                // Add to cache
+                imageCache.put(url, result);
+                imageView.setImageBitmap(result);
+            }
+        }
+    }
+
+    private void updateBookmarkIcon(ImageButton bookmarkButton, boolean isBookmarked) {
+        bookmarkButton.setImageResource(isBookmarked ?
+                R.drawable.bookmarked :
+                R.drawable.bookmark);
+    }
+
+    private void setupClickListeners(View itemView, ImageButton bookmarkButton, Tour tour, int position) {
+        // Item click listener
+        itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onTourClick(tour);
             }
         });
 
-        holder.bookmarkButton.setOnClickListener(v -> {
+        // Bookmark click listener
+        bookmarkButton.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onBookmarkClick(tour, position);
             }
@@ -117,7 +204,13 @@ public class TourAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return tourList.size();
+        return tourList != null ? tourList.size() : 0;
+    }
+
+    // Update data method for refreshing adapter data
+    public void updateData(List<Tour> newTours) {
+        this.tourList = newTours;
+        notifyDataSetChanged();
     }
 
     public static class RecentlyTourViewHolder extends RecyclerView.ViewHolder {
@@ -149,7 +242,6 @@ public class TourAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MainTourViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Fix view binding to match IDs in item_main_tour.xml
             imageView = itemView.findViewById(R.id.imgTour);
             nameTextView = itemView.findViewById(R.id.tvTourName);
             locationTextView = itemView.findViewById(R.id.tvLocation);

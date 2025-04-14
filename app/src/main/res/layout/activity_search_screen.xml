@@ -5,16 +5,13 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Bar - Giữ bên ngoài ScrollView vì thường là cố định -->
+    <!-- Top Bar -->
     <RelativeLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="#29B6F6">
 
-        <!-- Back Button -->
-
-        <!-- Profile and Notification Icons -->
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="64dp"
@@ -74,12 +71,31 @@
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <!-- Famous Tours Section -->
+        <!-- Category Filter Chip -->
+        <TextView
+            android:id="@+id/categoryFilterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchContainer"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/category_chip_background"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="#FFFFFF"
+            android:text="Category: Beach"
+            android:visibility="gone"
+            android:fontFamily="@font/sora" />
+
+        <!-- Tours Section Header - Fixed duplicate ID issue -->
         <LinearLayout
             android:id="@+id/toursSectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/searchContainer"
+            android:layout_below="@id/categoryFilterText"
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -93,6 +109,7 @@
                 android:contentDescription="Tours icon" />
 
             <TextView
+                android:id="@+id/sectionTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

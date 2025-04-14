@@ -42,6 +42,11 @@
             android:exported="false" />
 
         <activity
+            android:name=".view.SearchActivity"
+            android:exported="false" />
+
+
+        <activity
             android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
@@ -52,6 +57,18 @@
             android:exported="false" />
         <activity
             android:name=".view.ChangePasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.TourDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.BookingDateActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.BookingDetailsActivity"
             android:exported="false" />
 
 

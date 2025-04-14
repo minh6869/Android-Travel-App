@@ -1,6 +1,7 @@
 package com.example.travelerapp.view;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -104,10 +105,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         user.updatePassword(newPassword)
                                 .addOnSuccessListener(aVoid1 -> {
                                     progressDialog.dismiss();
-                                    Toast.makeText(ChangePasswordActivity.this,
-                                            "Password updated successfully",
-                                            Toast.LENGTH_SHORT).show();
-                                    finish();
+
+                                    // Show success dialog instead of Toast
+                                    showSuccessDialog("Password Updated",
+                                            "Your password has been updated successfully.");
                                 })
                                 .addOnFailureListener(e -> {
                                     progressDialog.dismiss();
@@ -135,15 +136,34 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         String userEmail = user.getEmail();
 
-        // Create dialog to confirm password reset
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Create and customize alert dialog for better visibility
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
         builder.setTitle("Reset Password");
         builder.setMessage("Send a password reset email to " + userEmail + "?");
+
+        // Customize positive button
         builder.setPositiveButton("Send", (dialog, which) -> {
             sendPasswordResetEmail(userEmail);
         });
+
+        // Customize negative button
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        builder.show();
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Make buttons more visible by changing their color
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        if (positiveButton != null) {
+            positiveButton.setTextColor(Color.BLUE);
+        }
+
+        if (negativeButton != null) {
+            negativeButton.setTextColor(Color.RED);
+        }
     }
 
     private void sendPasswordResetEmail(String email) {
@@ -158,13 +178,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     if (task.isSuccessful()) {
                         // Email sent successfully
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("Email Sent");
-                        builder.setMessage("A password reset email has been sent to your email address. " +
-                                "Please check your inbox and follow the instructions.");
-                        builder.setPositiveButton("OK", (dialog, which) -> finish());
-                        builder.setCancelable(false);
-                        builder.show();
+                        showSuccessDialog("Email Sent",
+                                "A password reset email has been sent to your email address. " +
+                                        "Please check your inbox and follow the instructions.");
                     } else {
                         // Failed to send email
                         Toast.makeText(ChangePasswordActivity.this,
@@ -172,5 +188,26 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    /**
+     * Show a success dialog with consistent styling
+     */
+    private void showSuccessDialog(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", (dialog, which) -> finish());
+        builder.setCancelable(false);
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Make button more visible by changing its color
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        if (positiveButton != null) {
+            positiveButton.setTextColor(Color.BLUE);
+        }
     }
 }

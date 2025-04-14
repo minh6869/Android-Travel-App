@@ -24,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bana_hill" />
+                    android:src="@drawable/ic_launcher_background" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/back_button"
@@ -71,10 +71,11 @@
                 android:background="#FFFFFF">
 
                 <TextView
+                    android:id="@+id/tour_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora"
-                    android:text="Ba Na Hills (Vietnam Golden Bridge) - Day Tour"
+                    android:text="Tour Title"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -91,11 +92,12 @@
                         android:src="@drawable/star" />
 
                     <TextView
+                        android:id="@+id/tour_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/sora"
-                        android:text="4.8/5 (674)"
+                        android:text="0.0 (0)"
                         android:textColor="#000000" />
                 </LinearLayout>
             </LinearLayout>
@@ -106,7 +108,7 @@
                 android:layout_height="1dp"
                 android:background="#1E40AF" />
 
-            <!-- Tour Highlights Section -->
+            <!-- Tour Description Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,54 +125,15 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:fontFamily="@font/sora"
-                        android:text="Enjoy breathtaking views of Ba Na Hills form the Golden Bridge one of the world's most striking pedestrian bridges" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tour_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:fontFamily="@font/sora"
-                        android:text="Marvel at the mountain view from the cable car" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/sora"
-                    android:text="Read more"
-                    android:textColor="#0066CC" />
+                    android:text="No description available."
+                    android:textColor="#333333" />
+
             </LinearLayout>
 
             <!-- Separator Line -->
@@ -321,16 +284,18 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tour_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora"
-                android:text="775.000 VND"
+                android:text="0 VND"
                 android:textColor="#FF6B6B"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

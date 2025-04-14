@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#2245FF</color>
     <color name="bottom_nav_color">#FFFFFFFF</color>
+
+
+    <color name="colorPrimary">#1E88E5</color>
+    <color name="textPrimary">#000000</color>
 </resources>

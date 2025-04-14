@@ -212,21 +212,21 @@ public class SignupActivity extends AppCompatActivity {
 
         // Save to Firestore
         db.collection("users").document(userId)
-            .set(userData)
-            .addOnSuccessListener(aVoid -> {
-                Toast.makeText(SignupActivity.this,
-                        "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                .set(userData)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(SignupActivity.this,
+                            "Đăng ký thành công", Toast.LENGTH_SHORT).show();
 
-                // Navigate to login activity
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            })
-            .addOnFailureListener(e -> {
-                Toast.makeText(SignupActivity.this,
-                        "Lỗi khi lưu thông tin người dùng: " + e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            });
+                    // Navigate to login activity
+                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(SignupActivity.this,
+                            "Lỗi khi lưu thông tin người dùng: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void setInputFieldsEnabled(boolean enabled) {
