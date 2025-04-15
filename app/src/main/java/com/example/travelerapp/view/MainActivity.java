@@ -1,5 +1,6 @@
 package com.example.travelerapp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -116,9 +117,27 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Please sign in to access this feature", Toast.LENGTH_SHORT).show();
 
         // Navigate to login screen
-        // startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
         // For now, just reset the selection to home fragment
         chipNavigationBar.setItemSelected(R.id.homeFragment, true);
+    }
+
+    /**
+     * Navigate to the profile tab
+     * This method is called from HomeFragment when the profile button is clicked
+     */
+    public void navigateToProfile() {
+        // Check if user is logged in before navigating to profile
+        if (!isUserLoggedIn()) {
+            promptLogin();
+            return;
+        }
+
+        // Navigate to profile fragment using ChipNavigationBar
+        if (chipNavigationBar != null) {
+            chipNavigationBar.setItemSelected(R.id.profileFragment, true);
+            navController.navigate(R.id.profileFragment);
+        }
     }
 }

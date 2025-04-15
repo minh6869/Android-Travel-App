@@ -71,6 +71,14 @@
             android:name=".view.BookingDetailsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".view.PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.BookingConfirmationActivity"
+            android:exported="false" />
+
 
     </application>
 

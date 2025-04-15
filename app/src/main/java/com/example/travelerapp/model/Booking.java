@@ -65,6 +65,13 @@ public class Booking implements Parcelable {
         tourName = in.readString();
         tourImageUrl = in.readString();
         tourImageResourceId = in.readInt();
+
+        // Safely read the BookingDateOption, handling potential ClassNotFoundException
+        try {
+            selectedDateOption = in.readParcelable(BookingDateOption.class.getClassLoader());
+        } catch (Exception e) {
+            selectedDateOption = null;
+        }
     }
 
     @Override
@@ -82,6 +89,7 @@ public class Booking implements Parcelable {
         dest.writeString(tourName);
         dest.writeString(tourImageUrl);
         dest.writeInt(tourImageResourceId);
+        dest.writeParcelable(selectedDateOption, flags);
     }
 
     @Override
@@ -104,6 +112,7 @@ public class Booking implements Parcelable {
     // Convert to Firestore document
     public Map<String, Object> toFirestore() {
         Map<String, Object> booking = new HashMap<>();
+        booking.put("id", id); // Include ID in the document
         booking.put("userId", userId);
         booking.put("participantName", participantName);
         booking.put("participantEmail", participantEmail);
@@ -118,11 +127,12 @@ public class Booking implements Parcelable {
         booking.put("numberOfPerson", numberOfPerson);
         booking.put("totalPrice", totalPrice);
         booking.put("paymentStatus", paymentStatus);
+        booking.put("createdAt", new Timestamp(new Date())); // Add creation timestamp
 
         return booking;
     }
 
-    // All getters and setters
+    // All getters and setters remain the same
     public String getId() {
         return id;
     }
@@ -240,5 +250,16 @@ public class Booking implements Parcelable {
 
     public String getVisitorSummary() {
         return "Visitors: " + numberOfPerson;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id='" + id + '\'' +
+                ", tourId='" + tourId + '\'' +
+                ", tourName='" + tourName + '\'' +
+                ", participants=" + numberOfPerson +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 }

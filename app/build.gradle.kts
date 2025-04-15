@@ -49,5 +49,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
     implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation("com.google.zxing:core:3.4.1")
 
 }

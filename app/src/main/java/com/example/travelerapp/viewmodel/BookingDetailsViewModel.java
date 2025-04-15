@@ -25,6 +25,7 @@ public class BookingDetailsViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> isLoadingLiveData = new MutableLiveData<>(false);
     private MutableLiveData<String> errorMessageLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> bookingCreatedLiveData = new MutableLiveData<>(false);
+    private MutableLiveData<String> bookingIdLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isUserLoggedInLiveData = new MutableLiveData<>();
 
     public BookingDetailsViewModel(@NonNull Application application) {
@@ -90,9 +91,12 @@ public class BookingDetailsViewModel extends AndroidViewModel {
             public void onBookingCreated(boolean success, String bookingId) {
                 isLoadingLiveData.setValue(false);
 
-                if (success) {
+                if (success && bookingId != null && !bookingId.isEmpty()) {
+                    Log.d(TAG, "Booking created successfully with ID: " + bookingId);
                     bookingCreatedLiveData.setValue(true);
+                    bookingIdLiveData.setValue(bookingId);
                 } else {
+                    Log.e(TAG, "Failed to create booking. Success: " + success + ", ID: " + bookingId);
                     errorMessageLiveData.setValue("Failed to create booking. Please try again.");
                 }
             }
@@ -114,6 +118,14 @@ public class BookingDetailsViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> isBookingCreated() {
         return bookingCreatedLiveData;
+    }
+
+    /**
+     * Returns the LiveData containing the booking ID after successful creation
+     * @return LiveData with the booking ID string
+     */
+    public LiveData<String> getBookingId() {
+        return bookingIdLiveData;
     }
 
     public LiveData<Boolean> isUserLoggedIn() {

@@ -2,6 +2,7 @@ package com.example.travelerapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ import com.example.travelerapp.model.Booking;
 import com.example.travelerapp.viewmodel.BookingDetailsViewModel;
 
 public class BookingDetailsActivity extends AppCompatActivity {
-
+    private static final String TAG = "BookingDetailsActivity";
     public static final String EXTRA_BOOKING = "booking";
 
     private BookingDetailsViewModel viewModel;
@@ -138,11 +139,12 @@ public class BookingDetailsActivity extends AppCompatActivity {
         });
 
         // Observe booking creation
-        viewModel.isBookingCreated().observe(this, isCreated -> {
-            if (isCreated) {
-                Toast.makeText(this, "Booking created successfully!", Toast.LENGTH_LONG).show();
-                // Navigate to payment or confirmation screen
-                navigateToPayment();
+        viewModel.getBookingId().observe(this, bookingId -> {
+            if (bookingId != null) {
+                Log.d(TAG, "Booking created with ID: " + bookingId);
+                Toast.makeText(this, "Booking created successfully!", Toast.LENGTH_SHORT).show();
+                // Navigate to payment with the booking ID
+                navigateToPayment(bookingId);
             }
         });
     }
@@ -172,6 +174,9 @@ public class BookingDetailsActivity extends AppCompatActivity {
             }
 
             // Create the booking
+            Log.d(TAG, "Creating booking...");
+            continueButton.setEnabled(false);
+            continueButton.setText("Creating booking...");
             viewModel.createBooking();
         });
     }
@@ -205,12 +210,34 @@ public class BookingDetailsActivity extends AppCompatActivity {
         Toast.makeText(this, "Price includes all taxes and fees", Toast.LENGTH_SHORT).show();
     }
 
-    private void navigateToPayment() {
-        // In a real app, you would navigate to a payment screen
-        // For this example, we'll just go back to the main activity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+    private void navigateToPayment(String bookingId) {
+        Log.d(TAG, "Navigating to PaymentActivity with booking ID: " + bookingId);
+
+        try {
+            // Try the static method first
+            PaymentActivity.start(this, bookingId);
+            Log.d(TAG, "Successfully started PaymentActivity using static method");
+        } catch (Exception e) {
+            Log.e(TAG, "Error starting PaymentActivity with static method", e);
+
+            // Fallback to direct intent
+            try {
+                Intent intent = new Intent(this, PaymentActivity.class);
+                intent.putExtra("extra_booking_id", bookingId);
+                startActivity(intent);
+                Log.d(TAG, "Successfully started PaymentActivity using direct intent");
+            } catch (Exception e2) {
+                Log.e(TAG, "Both navigation methods failed", e2);
+                Toast.makeText(this, "Error navigating to payment screen", Toast.LENGTH_LONG).show();
+
+                // Navigate back to main activity as last resort
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainIntent);
+            }
+        }
+
+        // Either way, finish this activity
         finish();
     }
 }

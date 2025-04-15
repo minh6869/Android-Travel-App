@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/sky"
+    android:gravity="center_horizontal"
     android:padding="16dp">
 
     <ImageView
@@ -42,99 +44,200 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="4dp"
-        app:cardCornerRadius="16dp" app:cardBackgroundColor="#FFFFFF" android:alpha="0.9"
-        app:cardElevation="4dp"> <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:alpha="0.9"
+        app:cardElevation="4dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sora"
-                android:text="Booking Id"
-                android:textColor="#757575"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/booking_id_text" android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/sora"
-                android:text="1747564638" android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora"
+                    android:text="Booking Id"
+                    android:textColor="#757575"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/booking_id_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/sora"
+                    android:text="1747564638"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/copy_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/copying"
+                app:tint="#757575"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/copy_icon" android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/copying"
-            app:tint="#757575" android:layout_gravity="center_vertical"
-            android:clickable="true" android:focusable="true"  android:background="?attr/selectableItemBackgroundBorderless"/> </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="16dp" app:cardElevation="4dp" app:cardBackgroundColor="#FFFFFF"> <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/tour_image" android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:src="@drawable/bana_hill" android:scaleType="centerCrop"
-            android:layout_marginEnd="16dp" />
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#FFFFFF">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-            <TextView
-                android:id="@+id/tour_title_text" android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/sora"
-                android:maxLines="1"
-                android:text="Ba Na Hills (Vietnam Gold...)" android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/tour_image"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:src="@drawable/bana_hill"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="16dp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/maps_and_flags__3_"
-                    app:tint="#757575" android:layout_marginEnd="4dp" />
                 <TextView
-                    android:id="@+id/tour_date_text" android:layout_width="wrap_content"
+                    android:id="@+id/tour_title_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/sora"
-                    android:text="March 18, 2025" android:textColor="#757575"
-                    android:textSize="14sp" />
+                    android:maxLines="2"
+                    android:text="Ba Na Hills (Vietnam Gold...)"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/maps_and_flags__3_"
+                        app:tint="#757575"
+                        android:layout_marginEnd="4dp" />
+                    <TextView
+                        android:id="@+id/tour_date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sora"
+                        android:text="March 18, 2025"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Additional Tour Details (Optional) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tour_details_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Booking Details"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/sora"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Number of travelers"
+                    android:textColor="#757575"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/sora"/>
+
+                <TextView
+                    android:id="@+id/travelers_count_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/sora"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total payment"
+                    android:textColor="#757575"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/sora"/>
+
+                <TextView
+                    android:id="@+id/total_payment_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1,500,000 VND"
+                    android:textColor="#F44336"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/sora"/>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -149,4 +252,18 @@
         android:text="Return to home"
         android:textColor="@color/blue"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/view_bookings_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#80FFFFFF"
+        android:fontFamily="@font/sora"
+        android:paddingVertical="12dp"
+        android:text="View My Bookings"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone" />
 </LinearLayout>

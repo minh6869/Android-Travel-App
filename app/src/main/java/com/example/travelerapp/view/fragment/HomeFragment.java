@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,17 +20,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.travelerapp.R;
 import com.example.travelerapp.model.Tour;
 import com.example.travelerapp.view.LoginActivity;
+import com.example.travelerapp.view.MainActivity;
 import com.example.travelerapp.view.SearchActivity;
 import com.example.travelerapp.view.TourDetailActivity;
 import com.example.travelerapp.view.adapter.TourAdapter;
 import com.example.travelerapp.viewmodel.TourViewModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment implements TourAdapter.OnTourClickListener {
 
     private Button btnSignIn;
+    private TextView tvWelcomeUser; // Thêm TextView cho tên người dùng
+    private ImageButton btnProfile; // Thêm ImageButton cho profile
     private RecyclerView recentlyTourRecyclerView;
     private RecyclerView mainTourRecyclerView;
     private TourAdapter recentlyTourAdapter;
@@ -43,13 +49,14 @@ public class HomeFragment extends Fragment implements TourAdapter.OnTourClickLis
     private ImageButton btnAttractions;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db; // Thêm FirebaseFirestore
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance(); // Khởi tạo Firestore
     }
-
 
     @Nullable
     @Override
@@ -60,17 +67,27 @@ public class HomeFragment extends Fragment implements TourAdapter.OnTourClickLis
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Find the sign-in button
+        // Find views
         btnSignIn = view.findViewById(R.id.btnSignIn);
+        tvWelcomeUser = view.findViewById(R.id.tvWelcomeUser); // Tìm TextView tên người dùng
+        btnProfile = view.findViewById(R.id.btnProfile); // Tìm nút profile
 
+        // Set click listeners
         btnSignIn.setOnClickListener(v -> {
             // Navigate to login activity
             startActivity(new Intent(getActivity(), LoginActivity.class));
         });
 
+        // Thêm click listener cho nút profile
+        btnProfile.setOnClickListener(v -> {
+            // Chuyển đến tab Profile nếu đang ở MainActivity
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).navigateToProfile();
+            }
+        });
+
         // Update UI based on authentication status
         updateAuthUI();
-
 
         // Initialize ViewModel
         viewModel = new ViewModelProvider(requireActivity()).get(TourViewModel.class);
@@ -185,7 +202,6 @@ public class HomeFragment extends Fragment implements TourAdapter.OnTourClickLis
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -194,13 +210,49 @@ public class HomeFragment extends Fragment implements TourAdapter.OnTourClickLis
     }
 
     private void updateAuthUI() {
-        if (mAuth.getCurrentUser() != null) {
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
             // User is signed in, hide the button
             btnSignIn.setVisibility(View.GONE);
+
+            // Load and display user name
+            loadUserName(user);
         } else {
             // User is not signed in, show the button
             btnSignIn.setVisibility(View.VISIBLE);
+
+            // Set default name for guests
+            tvWelcomeUser.setText("Guest");
         }
     }
 
+    /**
+     * Load user name from Firebase Auth and Firestore
+     */
+    private void loadUserName(FirebaseUser user) {
+        // First try to get the display name from Firebase Auth
+        if (user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+            tvWelcomeUser.setText(user.getDisplayName());
+        } else {
+            // Default name while loading
+            tvWelcomeUser.setText("User");
+
+            // Try to get name from Firestore
+            db.collection("users").document(user.getUid())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("name");
+                            if (name != null && !name.isEmpty()) {
+                                tvWelcomeUser.setText(name);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // In case of failure, keep default name
+                        tvWelcomeUser.setText("User");
+                    });
+        }
+    }
 }

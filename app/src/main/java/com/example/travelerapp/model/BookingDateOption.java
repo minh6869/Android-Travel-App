@@ -1,10 +1,13 @@
 package com.example.travelerapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.Timestamp;
 
 import java.util.Date;
 
-public class BookingDateOption {
+public class BookingDateOption implements Parcelable {
     private String id;
     private Date date;
     private int dayOfWeek;
@@ -26,6 +29,46 @@ public class BookingDateOption {
         this.isSelected = false;
         this.isAvailable = true;
     }
+
+    // Parcelable implementation
+    protected BookingDateOption(Parcel in) {
+        id = in.readString();
+        long tmpDate = in.readLong();
+        date = tmpDate != -1 ? new Date(tmpDate) : null;
+        dayOfWeek = in.readInt();
+        price = in.readDouble();
+        isHoliday = in.readByte() != 0;
+        isSelected = in.readByte() != 0;
+        isAvailable = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeLong(date != null ? date.getTime() : -1);
+        dest.writeInt(dayOfWeek);
+        dest.writeDouble(price);
+        dest.writeByte((byte) (isHoliday ? 1 : 0));
+        dest.writeByte((byte) (isSelected ? 1 : 0));
+        dest.writeByte((byte) (isAvailable ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<BookingDateOption> CREATOR = new Creator<BookingDateOption>() {
+        @Override
+        public BookingDateOption createFromParcel(Parcel in) {
+            return new BookingDateOption(in);
+        }
+
+        @Override
+        public BookingDateOption[] newArray(int size) {
+            return new BookingDateOption[size];
+        }
+    };
 
     // Convert from Firestore document
     public static BookingDateOption fromFirestore(String id, com.google.firebase.firestore.DocumentSnapshot document) {
